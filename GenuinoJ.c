@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <conio.h>
+#include <string.h>
 /*
 Author: Jose Mari Victorio G. Genuino
 Date Started: 7 February 2023
@@ -248,10 +249,10 @@ main() {
 // Play
 // structs
 
-typedef topic char[20];
-typedef question char [150];
-typedef choice char [30];
-typedef answer char [30];
+typedef char topic[20];
+typedef char question[150];
+typedef char choice[30];
+typedef char answer[30];
 
 struct record {
 		topic;
