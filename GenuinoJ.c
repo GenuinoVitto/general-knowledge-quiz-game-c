@@ -45,6 +45,10 @@ struct score {
 	int score;
 };
 
+// implement player name array and/or struct 
+// implement linear or binary search 
+// check hands on 2 and hands on 1 exams
+
 /* getString is a void function that allows the user to to input a sentence
 	@param *ptr - points to address of passed String30 variable instance
 */ 
