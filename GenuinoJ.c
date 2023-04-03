@@ -1,13 +1,16 @@
+// #includes
 #include <stdio.h>
 #include <conio.h>
 #include <string.h>
 /*
 Author: Jose Mari Victorio G. Genuino
 Date Started: 7 February 2023
-Date Finished: --
+Date Finished: 5 April 2023
 Purpose: QUIZ GAME - [CCPROG2] Machine Project 
 */
 
+// #DEFINES
+#DEFINE MAX 30
 
 // prototypes
 showMaster();
@@ -15,6 +18,178 @@ showManageDataMenu();
 showManageDataSubMenu();
 showQuizGameMenu();
 showQuizGameSubMenu();
+
+// typedefs
+typedef char String20[20];
+typedef char String30[30];
+typedef char Sentence[150];
+
+// structures
+struct record {
+	String20 topic;
+	int question_number;
+	Sentence question;
+	String30 choice1;
+	String30 choice2;
+	String30 choice3;
+	String30 answer;
+};
+
+// input sentence function 
+// fix logic of parameters
+void
+getString(String30 *ptr)
+{
+	char ch;
+	int i = 0;
+	String30 Sentence;
+	
+	do
+	{
+		scanf("%c", &ch);
+		
+		if(ch != '\n')
+		{
+			menu[i] = ch;
+			i++;
+			menu[i] = '\0';
+		}
+	}while (i < 51 && ch != '\n');
+	
+	strcpy(*ptr, Sentence);
+}
+
+// input record 
+// fix logic
+void
+getInput(struct menuRecord *A, int s)
+{
+	int i, current = s-1;
+	char c;
+	
+	if(((A+current)->time) > 0) // for adding 1 record, check if time has value
+	{
+		printf("\nEnter time (1, 2 or 3): ");
+		scanf("%d", &(A+s)->time);
+		scanf("%c", &c); // for new line in between int and characters
+		printf("Enter menu name: ");
+		getString(&((A+s)->name));
+		printf("Enter price: ");
+		scanf("%f", &(A+s)->price);
+	}
+	else
+	{
+		for(i = 0; i < s; i++)
+		{
+			printf("ITEM # %i", i+1);
+			printf("\nEnter time (1, 2 or 3): ");
+			scanf("%d", &(A+i)->time);
+			scanf("%c", &c); // for new line in between int and characters
+			printf("Enter menu name: ");
+			getString(&((A+i)->name));
+			printf("Enter price: ");
+			scanf("%f", &(A+i)->price);
+		}
+	}
+}
+
+void
+displayStruct(struct menuRecord A[], int s)
+{
+	int i, j;
+	String50 schedule;
+	printf("\n%-10s %-20s %-8s\n", "Time", "Menu", "Price");
+	
+	for(j = 0; j < 4; j++) // loop for each TIME
+	{
+		switch(j) // conditional for 
+		{
+			case 1: strcpy(schedule, "Breakfast"); break;
+			case 2: strcpy(schedule, "Lunch"); break;
+			case 3: strcpy(schedule, "Dinner"); break;
+			default: strcpy(schedule, "NA");
+		}
+		
+		for(i=0; i < s; i++)
+		{
+			if(((A+i)->time) == j)
+			{
+				printf("%-10s %-20s Php %-5.2f\n", schedule, (A+i)->name, (A+i)->price);
+			}
+		}
+	}
+}
+
+int
+addStruct(struct menuRecord *A, int s)
+{
+	getInput(A, s);
+	return s + 1;
+}
+
+void
+editStruct(struct menuRecord *A, int s)
+{
+	int i = 0;
+	int t = 1;
+	char c, nl;
+	
+	do{
+		printf("EDIT %-2i %-20s Php %-5.2f ?", (A+i)->time, (A+i)->name, (A+i)->price);
+		scanf(" %c", &c);
+		if(c == 121) // y
+		{
+			printf("\nEnter time (1, 2 or 3): ");
+			scanf("%d", &(A+i)->time);
+			scanf("%c", &nl); // for new line in between int and characters
+			printf("Enter menu name: ");
+			getString(&((A+i)->name));
+			printf("Enter price: ");
+			scanf("%f", &(A+i)->price);
+			t = 0;
+		}
+		else
+		{
+			i++;
+			t = 1;
+		}
+	}while(i < s && t);
+}
+
+int
+deleteStruct(struct menuRecord *A, int s)
+{
+	int i = 0;
+	int t = 1;
+	int d; // deleted index
+	char c;
+	
+	do{
+		printf("DELETE %-2i %-20s Php %-5.2f ? ", (A+i)->time, (A+i)->name, (A+i)->price);
+		scanf(" %c", &c);
+		if(c == 121)
+		{
+			// move succeeding records to the deleted position
+			for(d = i; d < s; d++)
+			{
+				(A+d)->time = (A+(d+1))->time;
+				strcpy(((A+d)->name), (A+(d+1))->name);
+				(A+d)->price = (A+(d+1))->price;
+			}
+			t = 0;
+			s--; // decrement size
+		}
+		else
+		{
+			i++;
+			t = 1;
+		}
+	}while(i < s && t);
+	
+	return s;
+}
+
+
 
 // intial run for user
 // system clear code |  system("cls");
