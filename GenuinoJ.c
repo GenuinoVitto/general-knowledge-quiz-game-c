@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <string.h>
-/*
+/* Quiz Game v2
 Author: Jose Mari Victorio G. Genuino
 Date Started: 7 February 2023
 Date Finished: 5 April 2023
@@ -24,7 +24,9 @@ typedef char String20[20];
 typedef char String30[30];
 typedef char Sentence[150];
 
-// structures
+/* struct record
+	- 
+*/
 struct record {
 	String20 topic;
 	int question_number;
@@ -35,8 +37,17 @@ struct record {
 	String30 answer;
 };
 
-// input sentence function 
-// fix logic of parameters
+/* struct score
+*/
+struct score {
+	int row_num;
+	String20 player_name;
+	int score;
+};
+
+/* getString is a void function that allows the user to to input a sentence
+	@param *ptr - points to address of passed String30 variable instance
+*/ 
 void
 getString(String30 *ptr)
 {
@@ -57,10 +68,12 @@ getString(String30 *ptr)
 	}while (i < 51 && ch != '\n');
 	
 	strcpy(*ptr, Sentence);
-}
+} // fix logic of parameters
 
-// input record 
-// fix logic
+/* getInput allows the user to input a record for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 void
 getInput(struct menuRecord *A, int s)
 {
@@ -91,7 +104,7 @@ getInput(struct menuRecord *A, int s)
 			scanf("%f", &(A+i)->price);
 		}
 	}
-}
+} // fix logic
 
 void
 displayStruct(struct menuRecord A[], int s)
@@ -125,7 +138,7 @@ addStruct(struct menuRecord *A, int s)
 {
 	getInput(A, s);
 	return s + 1;
-}
+} // fix logic
 
 void
 editStruct(struct menuRecord *A, int s)
@@ -154,7 +167,7 @@ editStruct(struct menuRecord *A, int s)
 			t = 1;
 		}
 	}while(i < s && t);
-}
+} // fix logic
 
 int
 deleteStruct(struct menuRecord *A, int s)
@@ -187,7 +200,7 @@ deleteStruct(struct menuRecord *A, int s)
 	}while(i < s && t);
 	
 	return s;
-}
+} // fix logic
 
 
 
@@ -220,7 +233,7 @@ int
 showManageDataMenu(){
 	int choice,temp;
 	do
-	{
+	{ // vv implement password feature here vv
 		choice = showManageDataSubMenu();
 		switch(choice)
 		{
@@ -402,13 +415,6 @@ main() {
 	// password entry
 	// password store
 
-
-// add a record
-
-// edit a record
-
-// delete a record
-
 // import data
 
 // export data
@@ -423,21 +429,6 @@ main() {
 
 // Play
 // structs
-
-typedef char topic[20];
-typedef char question[150];
-typedef char choice[30];
-typedef char answer[30];
-
-struct record {
-		topic;
-		int questionNumber;
-		question n[150];
-		choice option1;
-		choice option2;
-		choice option3;
-		answer;
-	};
 
 // View Scores
 
