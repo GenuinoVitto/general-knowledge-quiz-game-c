@@ -9,14 +9,14 @@ Date Finished: 5 April 2023
 Purpose: QUIZ GAME - [CCPROG2] Machine Project 
 */
 
-//#define SIZE 50
+#define SIZE 2
 
 // prototypes
-showMaster();
-showManageDataMenu();
-showManageDataSubMenu();
-showQuizGameMenu();
-showQuizGameSubMenu();
+int showMaster();
+int showManageDataMenu();
+int showManageDataSubMenu();
+int showQuizGameMenu();
+int showQuizGameSubMenu();
 
 // typedefs
 typedef char String20[20];
@@ -52,7 +52,29 @@ struct score {
 	@param *ptr - points to address of passed String30 variable instance
 */ 
 void
-getString(String30 *ptr)
+getString20(String20 *ptr)
+{
+	char ch;
+	int i = 0;
+	String20 Sentence;
+	
+	do
+	{
+		scanf("%c", &ch);
+		
+		if(ch != '\n')
+		{
+			Sentence[i] = ch;
+			i++;
+			Sentence[i] = '\0';
+		}
+	}while (i < 21 && ch != '\n');
+	
+	strcpy(*ptr, Sentence);
+} 
+
+void
+getString30(String30 *ptr)
 {
 	char ch;
 	int i = 0;
@@ -64,120 +86,137 @@ getString(String30 *ptr)
 		
 		if(ch != '\n')
 		{
-			menu[i] = ch;
+			Sentence[i] = ch;
 			i++;
-			menu[i] = '\0';
+			Sentence[i] = '\0';
 		}
-	}while (i < 51 && ch != '\n');
+	}while (i < 31 && ch != '\n');
 	
 	strcpy(*ptr, Sentence);
-} // fix logic of parameters
+}
 
+void
+getSentence(Sentence *ptr)
+{
+	char ch;
+	int i = 0;
+	Sentence question;
+	
+	do
+	{
+		scanf("%c", &ch);
+		
+		if(ch != '\n')
+		{
+			question[i] = ch;
+			i++;
+			question[i] = '\0';
+		}
+	}while (i < 151 && ch != '\n');
+	
+	strcpy(*ptr, question);
+}
 /* getInput allows the user to input a record for the Quiz Game
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
 void
-getInput(struct quizRecord *A, int s)
+getInput(struct record *A, int s)
 {
 	int i, current = s-1;
 	char c;
 	
-	if(((A+current)->time) > 0) // for adding 1 record, check if time has value
+	if(((A+current)->question_number) > 0) // for adding 1 record, check if time has value
 	{
 		printf("\nEnter topic: ");
-		getString(&((A+s)->topic));
-		scanf("%c", &c); // for new line in between int and characters
+		scanf("%s", &((A+i)->topic));
+		scanf("%c", &c);// for new line in between int and characters
 		printf("Enter question number: ");
-		scanf("%d", &((A+s)->question_number));
+		scanf("%d", &((A+i)->question_number));
+		scanf("%c", &c);// for new line in between int and characters
 		printf("Enter question: ");
-		getString(&((A+s)->question));
+		getSentence(&((A+i)->question));
 		printf("Enter choice1: ");
-		getString(&((A+s)->choice1));
+		getString30(&((A+i)->choice1));
 		printf("Enter choice2: ");
-		getString(&((A+s)->choice2));
+		getString30(&((A+i)->choice2));
 		printf("Enter choice3: ");
-		getString(&((A+s)->choice3));
+		getString30(&((A+i)->choice3));
 		printf("Enter answer: ");
-		getString(&((A+s)->answer));
+		getString30(&((A+i)->answer));
 	}
 	else
 	{
-		for(i = 0; i < s; i++)
+		for(i = 0; i < 1/*change value to s after testing*/; i++)
 		{
 			printf("ITEM # %i", i+1);
 			printf("\nEnter topic: ");
-			getString(&((A+s)->topic));
-			scanf("%c", &c); // for new line in between int and characters
+			scanf("%s", &((A+i)->topic));
+			scanf("%c", &c);// for new line in between int and characters
 			printf("Enter question number: ");
-			scanf("%d", &((A+s)->question_number));
+			scanf("%d", &((A+i)->question_number));
+			scanf("%c", &c);// for new line in between int and characters
 			printf("Enter question: ");
-			getString(&((A+s)->question));
+			getSentence(&((A+i)->question));
 			printf("Enter choice1: ");
-			getString(&((A+s)->choice1));
+			getString30(&((A+i)->choice1));
 			printf("Enter choice2: ");
-			getString(&((A+s)->choice2));
+			getString30(&((A+i)->choice2));
 			printf("Enter choice3: ");
-			getString(&((A+s)->choice3));
+			getString30(&((A+i)->choice3));
 			printf("Enter answer: ");
-			getString(&((A+s)->answer));
+			getString30(&((A+i)->answer));
 		}
 	}
 } // fix logic
 
 void
-displayStruct(struct quizRecord A[], int s)
+displayStruct(struct record A[], int s)
 {
-	int i, j;
-	String50 schedule;
-	printf("\n%-10s %-20s %-8s\n", "Time", "Menu", "Price");
+	int i;
+	printf("\n%-10s %-10s %-20s %-10s %-10s %-10s %-10s\n", "Topic", "Number", "Question", "Choice 1", "Choice 2", "Choice 3", "Answer");
 	
-	for(j = 0; j < 4; j++) // loop for each TIME
-	{
-		switch(j) // conditional for 
+		for(i=0; i < 1/*change value to s after testing*/; i++)
 		{
-			case 1: strcpy(schedule, "Breakfast"); break;
-			case 2: strcpy(schedule, "Lunch"); break;
-			case 3: strcpy(schedule, "Dinner"); break;
-			default: strcpy(schedule, "NA");
+			printf("%-10s %-10d %-30s %-10s %-10s %-10s %-10s\n", (A+i)->topic, (A+i)->question_number, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		}
-		
-		for(i=0; i < s; i++)
-		{
-			if(((A+i)->time) == j)
-			{
-				printf("%-10s %-20s Php %-5.2f\n", schedule, (A+i)->name, (A+i)->price);
-			}
-		}
-	}
 }
 
 int
-addStruct(struct quizRecord *A, int s)
+addStruct(struct record *A, int s)
 {
 	getInput(A, s);
 	return s + 1;
 } 
 
 void
-editStruct(struct quizRecord *A, int s)
+editStruct(struct record *A, int s)
 {
 	int i = 0;
 	int t = 1;
-	char c, nl;
+	char c;
 	
 	do{
-		printf("EDIT %-2i %-20s Php %-5.2f ?", (A+i)->time, (A+i)->name, (A+i)->price);
+		printf("EDIT %-10s %-5.2d %-20s %-20s %-20s %-20s %-20s (Y/N)?", (A+i)->topic, (A+i)->question_number, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		scanf(" %c", &c);
-		if(c == 121) // y
+		if(c == 121 || c == 89) // y or Y
 		{
-			printf("\nEnter time (1, 2 or 3): ");
-			scanf("%d", &(A+i)->time);
-			scanf("%c", &nl); // for new line in between int and characters
-			printf("Enter menu name: ");
-			getString(&((A+i)->name));
-			printf("Enter price: ");
-			scanf("%f", &(A+i)->price);
+			printf("\nEnter topic: ");
+			scanf("%s", &((A+i)->topic));
+			scanf("%c", &c);// for new line in between int and characters
+			printf("Enter question number: ");
+			scanf("%d", &((A+i)->question_number));
+			scanf("%c", &c);// for new line in between int and characters
+			printf("Enter question: ");
+			getSentence(&((A+i)->question));
+			printf("Enter choice1: ");
+			getString30(&((A+i)->choice1));
+			printf("Enter choice2: ");
+			getString30(&((A+i)->choice2));
+			printf("Enter choice3: ");
+			getString30(&((A+i)->choice3));
+			printf("Enter answer: ");
+			getString30(&((A+i)->answer));
 			t = 0;
 		}
 		else
@@ -189,7 +228,7 @@ editStruct(struct quizRecord *A, int s)
 } // fix logic
 
 int
-deleteStruct(struct quizRecord *A, int s)
+deleteStruct(struct record *A, int s)
 {
 	int i = 0;
 	int t = 1;
@@ -197,16 +236,20 @@ deleteStruct(struct quizRecord *A, int s)
 	char c;
 	
 	do{
-		printf("DELETE %-2i %-20s Php %-5.2f ? ", (A+i)->time, (A+i)->name, (A+i)->price);
+		printf("DELETE %-10s %-5.2d %-20s %-20s %-20s %-20s %-20s (Y/N)? ", (A+i)->topic, (A+i)->question_number, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		scanf(" %c", &c);
-		if(c == 121)
+		if(c == 121 || c == 89) // y or Y
 		{
 			// move succeeding records to the deleted position
 			for(d = i; d < s; d++)
 			{
-				(A+d)->time = (A+(d+1))->time;
-				strcpy(((A+d)->name), (A+(d+1))->name);
-				(A+d)->price = (A+(d+1))->price;
+				strcpy(((A+d)->topic), (A+(d+1))->topic);
+				(A+d)->question_number = (A+(d+1))->question_number;
+				strcpy(((A+d)->question), (A+(d+1))->question);
+				strcpy(((A+d)->choice1), (A+(d+1))->choice1);
+				strcpy(((A+d)->choice2), (A+(d+1))->choice2);
+				strcpy(((A+d)->choice3), (A+(d+1))->choice3);
+				strcpy(((A+d)->answer), (A+(d+1))->answer);
 			}
 			t = 0;
 			s--; // decrement size
@@ -247,7 +290,7 @@ showMaster(){
 }
 
 int 
-showManageDataMenu(struct quizRecord *A, int s){
+showManageDataMenu(struct record *A, int s){
 	int choice,temp,cmp,i;
 	String20 password;
 	char ch;
@@ -255,16 +298,16 @@ showManageDataMenu(struct quizRecord *A, int s){
 	do
 	{ 
 		// password feature
-		do{
-			printf("Enter the password <any 20 characters> : ");
-		
-			for(i=0;i<20;i++) {
-				ch = getch();
-				password[i] = ch;
-				ch = "*";
-				printf("%c", ch);
-			}	
-		}while(password[1]!="\0");
+//		do{
+//			printf("Enter the password <any 20 characters> : ");
+//		
+//			for(i=0;i<20;i++) {
+//				ch = getch();
+//				password[i] = ch;
+//				ch = '*';
+//				printf("%c", ch);
+//			}	
+//		}while(//add );
 
 		choice = showManageDataSubMenu();
 		switch(choice)
@@ -277,35 +320,41 @@ showManageDataMenu(struct quizRecord *A, int s){
 			}
 			case 2:
 			{
+				// display records feature
+				displayStruct(A, s);
+				break;
+			}
+			case 3:
+			{
 				// edit record feature
 				editStruct(A, s);
 				break;
 			}
-			case 3:
+			case 4:
 			{
 				// delete a record feature
 				deleteStruct(A, s);
 				break;
 			}
-			case 4:
+			case 5:
 			{
 				// import data feature
 				// read and/or write text file
 				break;
 			}
-			case 5:
+			case 6:
 			{
 				// export data feature
 				// read and/or write text file
 				break;
 			}
-			case 6:
+			case 7:
 			{
 				// go back to main menu feature
 				break;
 			}
 		}
-	}while(choice>6);
+	}while(choice>7);
 	
 	return choice;
 }
@@ -321,15 +370,17 @@ showManageDataSubMenu(){
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2 1| Add a Record    	  \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
-		printf("		\xDB\xDB\xDB\xDB\xB2 2| Edit a Record            \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 2| View Records             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
-		printf("		\xDB\xDB\xDB\xDB\xB2 3| Delete a Record          \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 3| Edit a Record            \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
-		printf("		\xDB\xDB\xDB\xDB\xB2 4| Import Data              \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 4| Delete a Record          \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
-		printf("		\xDB\xDB\xDB\xDB\xB2 5| Export Data              \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 5| Import Data              \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
-		printf("		\xDB\xDB\xDB\xDB\xB2 6| Go back to MAIN MENU     \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 6| Export Data              \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 7| Go back to MAIN MENU     \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n");;
 		printf("\nPlease enter your choice : ");
@@ -340,7 +391,7 @@ showManageDataSubMenu(){
 }
 
 int 
-showQuizGameMenu(struct quizRecord *A, int s){
+showQuizGameMenu(struct record *A, int s){
 	int choice,temp;
 	do
 	{
