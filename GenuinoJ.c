@@ -292,23 +292,30 @@ showMaster(){
 int 
 showManageDataMenu(struct record *A, int s){
 	int choice,temp,cmp,i;
-	String20 password;
 	char ch;
-
+	String20 password, temp2;
 	do
 	{ 
 		// password feature
-//		do{
-//			printf("Enter the password <any 20 characters> : ");
-//		
-//			for(i=0;i<20;i++) {
-//				ch = getch();
-//				password[i] = ch;
-//				ch = '*';
-//				printf("%c", ch);
-//			}	
-//		}while(//add );
-
+		strcpy(password, "none");
+		strcpy(temp2, "empty");
+			printf("%s",password);
+			if((strcmp(password,"none"))==0)
+			{
+				printf("There is no existing password, please enter one :> : ");
+		
+				for(i=0;i<20;i++) {
+			 		ch=getch();
+		 			password[i] = ch;
+			 		ch = '*';
+			 		printf("%c", ch);
+			 	}	
+			} else {
+				printf("Please enter the existing passcode :> %s", password);
+				scanf("%s", temp2);
+			}
+		// password feature
+		
 		choice = showManageDataSubMenu();
 		switch(choice)
 		{
@@ -390,22 +397,53 @@ showManageDataSubMenu(){
 	return selected;
 }
 
+
+// play function
+void
+play(){
+	// ask for player name
+	
+	// choose from topics
+	
+	// display random question (under topic)
+	
+	// answer question
+		// if correct
+			// add score
+		// else wrong
+			// "sorry" message	
+			// ask for another topic
+	
+	// display end game option
+		// if chosen
+			// message
+			// accumulated score
+			// go back to menu
+		// else go back to answer question
+}
+// view scores function
+
+// exit quiz game menu function?
+
 int 
 showQuizGameMenu(struct record *A, int s){
 	int choice,temp;
 	do
 	{
+		// read "score.txt" file
 		choice = showQuizGameSubMenu();
 		switch(choice)
 		{
 			case 1:
 			{
 				// play feature
+				// play();
 				break;
 			}
 			case 2:
 			{
 				// view scores feature
+				// viewScores();
 				break;
 			}
 			case 3:
