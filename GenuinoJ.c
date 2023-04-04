@@ -9,8 +9,7 @@ Date Finished: 5 April 2023
 Purpose: QUIZ GAME - [CCPROG2] Machine Project 
 */
 
-// #DEFINES
-#DEFINE MAX 30
+//#define SIZE 50
 
 // prototypes
 showMaster();
@@ -206,8 +205,6 @@ deleteStruct(struct menuRecord *A, int s)
 	return s;
 } // fix logic
 
-
-
 // intial run for user
 // system clear code |  system("cls");
 // get input code | getch();
@@ -244,26 +241,31 @@ showManageDataMenu(){
 			case 1:
 			{
 				// add record feature
+				addStruct(// pass record pointer, int SIZE)
 				break;
 			}
 			case 2:
 			{
 				// edit record feature
+				editStruct(// pass record pointer, int SIZE)
 				break;
 			}
 			case 3:
 			{
 				// delete a record feature
+				deleteStruct(// pass record pointer, int SIZE)
 				break;
 			}
 			case 4:
 			{
 				// import data feature
+				// read and/or write text file
 				break;
 			}
 			case 5:
 			{
 				// export data feature
+				// read and/or write text file
 				break;
 			}
 			case 6:
@@ -359,6 +361,10 @@ showQuizGameSubMenu(){
 
 int 
 main() {
+	
+	char password[10]; 
+	
+	struct record quizRecord[SIZE];
 	
 	int choice;
 	
