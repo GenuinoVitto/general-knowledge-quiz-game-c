@@ -78,39 +78,55 @@ getString(String30 *ptr)
 	@param s - is the size of the array of records passed
 */ 
 void
-getInput(struct menuRecord *A, int s)
+getInput(struct quizRecord *A, int s)
 {
 	int i, current = s-1;
 	char c;
 	
 	if(((A+current)->time) > 0) // for adding 1 record, check if time has value
 	{
-		printf("\nEnter time (1, 2 or 3): ");
-		scanf("%d", &(A+s)->time);
+		printf("\nEnter topic: ");
+		getString(&((A+s)->topic));
 		scanf("%c", &c); // for new line in between int and characters
-		printf("Enter menu name: ");
-		getString(&((A+s)->name));
-		printf("Enter price: ");
-		scanf("%f", &(A+s)->price);
+		printf("Enter question number: ");
+		scanf("%d", &((A+s)->question_number));
+		printf("Enter question: ");
+		getString(&((A+s)->question));
+		printf("Enter choice1: ");
+		getString(&((A+s)->choice1));
+		printf("Enter choice2: ");
+		getString(&((A+s)->choice2));
+		printf("Enter choice3: ");
+		getString(&((A+s)->choice3));
+		printf("Enter answer: ");
+		getString(&((A+s)->answer));
 	}
 	else
 	{
 		for(i = 0; i < s; i++)
 		{
 			printf("ITEM # %i", i+1);
-			printf("\nEnter time (1, 2 or 3): ");
-			scanf("%d", &(A+i)->time);
+			printf("\nEnter topic: ");
+			getString(&((A+s)->topic));
 			scanf("%c", &c); // for new line in between int and characters
-			printf("Enter menu name: ");
-			getString(&((A+i)->name));
-			printf("Enter price: ");
-			scanf("%f", &(A+i)->price);
+			printf("Enter question number: ");
+			scanf("%d", &((A+s)->question_number));
+			printf("Enter question: ");
+			getString(&((A+s)->question));
+			printf("Enter choice1: ");
+			getString(&((A+s)->choice1));
+			printf("Enter choice2: ");
+			getString(&((A+s)->choice2));
+			printf("Enter choice3: ");
+			getString(&((A+s)->choice3));
+			printf("Enter answer: ");
+			getString(&((A+s)->answer));
 		}
 	}
 } // fix logic
 
 void
-displayStruct(struct menuRecord A[], int s)
+displayStruct(struct quizRecord A[], int s)
 {
 	int i, j;
 	String50 schedule;
@@ -137,14 +153,14 @@ displayStruct(struct menuRecord A[], int s)
 }
 
 int
-addStruct(struct menuRecord *A, int s)
+addStruct(struct quizRecord *A, int s)
 {
 	getInput(A, s);
 	return s + 1;
-} // fix logic
+} 
 
 void
-editStruct(struct menuRecord *A, int s)
+editStruct(struct quizRecord *A, int s)
 {
 	int i = 0;
 	int t = 1;
@@ -173,7 +189,7 @@ editStruct(struct menuRecord *A, int s)
 } // fix logic
 
 int
-deleteStruct(struct menuRecord *A, int s)
+deleteStruct(struct quizRecord *A, int s)
 {
 	int i = 0;
 	int t = 1;
@@ -231,29 +247,44 @@ showMaster(){
 }
 
 int 
-showManageDataMenu(){
-	int choice,temp;
+showManageDataMenu(struct quizRecord *A, int s){
+	int choice,temp,cmp,i;
+	String20 password;
+	char ch;
+
 	do
-	{ // vv implement password feature here vv
+	{ 
+		// password feature
+		do{
+			printf("Enter the password <any 20 characters> : ");
+		
+			for(i=0;i<20;i++) {
+				ch = getch();
+				password[i] = ch;
+				ch = "*";
+				printf("%c", ch);
+			}	
+		}while(password[1]!="\0");
+
 		choice = showManageDataSubMenu();
 		switch(choice)
 		{
 			case 1:
 			{
 				// add record feature
-				addStruct(// pass record pointer, int SIZE)
+				addStruct(A, s);
 				break;
 			}
 			case 2:
 			{
 				// edit record feature
-				editStruct(// pass record pointer, int SIZE)
+				editStruct(A, s);
 				break;
 			}
 			case 3:
 			{
 				// delete a record feature
-				deleteStruct(// pass record pointer, int SIZE)
+				deleteStruct(A, s);
 				break;
 			}
 			case 4:
@@ -309,7 +340,7 @@ showManageDataSubMenu(){
 }
 
 int 
-showQuizGameMenu(){
+showQuizGameMenu(struct quizRecord *A, int s){
 	int choice,temp;
 	do
 	{
@@ -376,12 +407,12 @@ main() {
 		{
 			case 1: 
 			{
-				showManageDataMenu();
+				showManageDataMenu(quizRecord, SIZE);
 				break;
 			}
 			case 2: 
 			{
-				showQuizGameMenu();
+				showQuizGameMenu(quizRecord, SIZE);
 				break;
 			}
 			case 3:
@@ -409,19 +440,19 @@ main() {
 /* MANAGE DATA SEGMENT*/
 
 // ask for a password [password entry]
-//	char password[20], ch;
-//	int i;
-//	
-//	do{
-//		printf("Enter the password <any 20 characters> : ");
-//	
-//		for(i=0;i<20;i++) {
-//			ch = getch();
-//			password[i] = ch;
-//			ch = "*";
-//			printf("%c", ch);
-//		}	
-//	}while()
+	// char password[20], ch;
+	// int i;
+	
+	// do{
+	// 	printf("Enter the password <any 20 characters> : ");
+	
+	// 	for(i=0;i<20;i++) {
+	// 		ch = getch();
+	// 		password[i] = ch;
+	// 		ch = "*";
+	// 		printf("%c", ch);
+	// 	}	
+	// }while()
 	// password entry
 	// password store
 
