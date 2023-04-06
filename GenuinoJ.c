@@ -321,7 +321,9 @@ showMaster(){
 	@param *password - points to the address of String20 password
 */ 
 void 
-getPassword(String20 *password){
+getPassword(char *password){
+	
+	// password is set to ""
 	
 	String20 temp;
 	int i;
@@ -331,15 +333,14 @@ getPassword(String20 *password){
 			if(strlen(password)==0)
 			{
 				printf("There is no existing password, please enter one :> : ");
-		
+				
 				for(i=0;i<8;i++) {
 			 		ch=getch();
 		 			password[i] = ch;
 			 		ch = '*';
 			 		printf("%c", ch);
 			 	}
-				 
-				 password[i]="";
+				 password[i]='\0';
 				 	
 			} else {
 				printf("Please enter the existing password :> %s", password);
@@ -357,10 +358,10 @@ getPassword(String20 *password){
 	@param *password - points to the address of String20 password
 */ 
 int 
-showManageDataMenu(struct record *A, int s, String20 *password){
+showManageDataMenu(struct record *A, int s){
 	int choice,temp,cmp,i;
 	char ch;
-	getPassword(password);
+	
 	do
 	{ 	
 		choice = showManageDataSubMenu();
@@ -423,7 +424,7 @@ showManageDataSubMenu(){
 	
 	do
 	{
-		system("cls");
+//		system("cls");
 		printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MANAGE DATA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2 1| Add a Record    	  \xB2\xDB\xDB\xDB\xDB\n\n");
@@ -496,7 +497,7 @@ play(struct record *A, int s, struct score *B, int t){
 	char ch;
 
 	// load "score.txt" file
-	fp=fopen("score.txt", wb+);
+	fp=fopen("score.txt", "wb+");
 
 	// ask for player name
 		printf("Enter your player name : ");
@@ -590,7 +591,7 @@ showQuizGameSubMenu(){
 int 
 main() {
 	 
-	String20 password;
+	char password[20];
 	strcpy(password, "");
 
 	struct record quizRecord[SIZE]; // struct for the amount of Quiz Questions
@@ -605,7 +606,8 @@ main() {
 		{
 			case 1: 
 			{
-				showManageDataMenu(quizRecord, SIZE, password);
+				getPassword(password);
+				showManageDataMenu(quizRecord, SIZE);
 				break;
 			}
 			case 2: 
