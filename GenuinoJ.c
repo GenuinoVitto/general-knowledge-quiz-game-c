@@ -28,7 +28,7 @@ typedef char Sentence[150];
 */
 struct record {
 	String20 topic;
-	int question_number;
+	int questionNumber;
 	Sentence question;
 	String30 choice1;
 	String30 choice2;
@@ -39,8 +39,8 @@ struct record {
 /* struct score
 */
 struct score {
-	int row_num;
-	String20 player_name;
+	int rowNum;
+	String20 playerName;
 	int score;
 };
 
@@ -48,8 +48,8 @@ struct score {
 // implement linear or binary search 
 // check hands on 2 and hands on 1 exams
 
-/* getString is a void function that allows the user to to input a sentence
-	@param *ptr - points to address of passed String30 variable instance
+/* getString20 is a void function that allows the user to to input String20
+	@param *ptr - points to address of passed String20 variable instance
 */ 
 void
 getString20(String20 *ptr)
@@ -73,6 +73,9 @@ getString20(String20 *ptr)
 	strcpy(*ptr, Sentence);
 } 
 
+/* getString30 is a void function that allows the user to to input String30
+	@param *ptr - points to address of passed String30 variable instance
+*/
 void
 getString30(String30 *ptr)
 {
@@ -95,6 +98,9 @@ getString30(String30 *ptr)
 	strcpy(*ptr, Sentence);
 }
 
+/* getSentence is a void function that allows the user to to input a Sentence
+	@param *ptr - points to address of passed Sentence variable instance
+*/
 void
 getSentence(Sentence *ptr)
 {
@@ -116,6 +122,7 @@ getSentence(Sentence *ptr)
 	
 	strcpy(*ptr, question);
 }
+
 /* getInput allows the user to input a record for the Quiz Game
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
@@ -126,13 +133,13 @@ getInput(struct record *A, int s)
 	int i, current = s-1;
 	char c;
 	
-	if(((A+current)->question_number) > 0) // for adding 1 record, check if time has value
+	if(((A+current)->questionNumber) > 0) // for adding 1 record, check if time has value
 	{
 		printf("\nEnter topic: ");
 		scanf("%s", &((A+i)->topic));
 		scanf("%c", &c);// for new line in between int and characters
 		printf("Enter question number: ");
-		scanf("%d", &((A+i)->question_number));
+		scanf("%d", &((A+i)->questionNumber));
 		scanf("%c", &c);// for new line in between int and characters
 		printf("Enter question: ");
 		getSentence(&((A+i)->question));
@@ -154,7 +161,7 @@ getInput(struct record *A, int s)
 			scanf("%s", &((A+i)->topic));
 			scanf("%c", &c);// for new line in between int and characters
 			printf("Enter question number: ");
-			scanf("%d", &((A+i)->question_number));
+			scanf("%d", &((A+i)->questionNumber));
 			scanf("%c", &c);// for new line in between int and characters
 			printf("Enter question: ");
 			getSentence(&((A+i)->question));
@@ -170,6 +177,10 @@ getInput(struct record *A, int s)
 	}
 } // fix logic
 
+/* displayStruct allows the user to display the records for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 void
 displayStruct(struct record A[], int s)
 {
@@ -178,10 +189,14 @@ displayStruct(struct record A[], int s)
 	
 		for(i=0; i < 1/*change value to s after testing*/; i++)
 		{
-			printf("%-10s %-10d %-30s %-10s %-10s %-10s %-10s\n", (A+i)->topic, (A+i)->question_number, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
+			printf("%-10s %-10d %-30s %-10s %-10s %-10s %-10s\n", (A+i)->topic, (A+i)->questionNumber, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		}
 }
 
+/* addStruct allows the user to input additional records for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 int
 addStruct(struct record *A, int s)
 {
@@ -189,6 +204,10 @@ addStruct(struct record *A, int s)
 	return s + 1;
 } 
 
+/* editStruct allows the user to edit a record for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 void
 editStruct(struct record *A, int s)
 {
@@ -197,7 +216,7 @@ editStruct(struct record *A, int s)
 	char c;
 	
 	do{
-		printf("EDIT %-10s %-5.2d %-20s %-20s %-20s %-20s %-20s (Y/N)?", (A+i)->topic, (A+i)->question_number, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
+		printf("EDIT %-10s %-5.2d %-20s %-20s %-20s %-20s %-20s (Y/N)?", (A+i)->topic, (A+i)->questionNumber, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		scanf(" %c", &c);
 		if(c == 121 || c == 89) // y or Y
 		{
@@ -205,7 +224,7 @@ editStruct(struct record *A, int s)
 			scanf("%s", &((A+i)->topic));
 			scanf("%c", &c);// for new line in between int and characters
 			printf("Enter question number: ");
-			scanf("%d", &((A+i)->question_number));
+			scanf("%d", &((A+i)->questionNumber));
 			scanf("%c", &c);// for new line in between int and characters
 			printf("Enter question: ");
 			getSentence(&((A+i)->question));
@@ -227,6 +246,10 @@ editStruct(struct record *A, int s)
 	}while(i < s && t);
 } // fix logic
 
+/* deleteStruct allows the user to delete a record for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 int
 deleteStruct(struct record *A, int s)
 {
@@ -236,7 +259,7 @@ deleteStruct(struct record *A, int s)
 	char c;
 	
 	do{
-		printf("DELETE %-10s %-5.2d %-20s %-20s %-20s %-20s %-20s (Y/N)? ", (A+i)->topic, (A+i)->question_number, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
+		printf("DELETE %-10s %-5.2d %-20s %-20s %-20s %-20s %-20s (Y/N)? ", (A+i)->topic, (A+i)->questionNumber, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		scanf(" %c", &c);
 		if(c == 121 || c == 89) // y or Y
 		{
@@ -244,7 +267,7 @@ deleteStruct(struct record *A, int s)
 			for(d = i; d < s; d++)
 			{
 				strcpy(((A+d)->topic), (A+(d+1))->topic);
-				(A+d)->question_number = (A+(d+1))->question_number;
+				(A+d)->questionNumber = (A+(d+1))->questionNumber;
 				strcpy(((A+d)->question), (A+(d+1))->question);
 				strcpy(((A+d)->choice1), (A+(d+1))->choice1);
 				strcpy(((A+d)->choice2), (A+(d+1))->choice2);
@@ -268,6 +291,11 @@ deleteStruct(struct record *A, int s)
 // system clear code |  system("cls");
 // get input code | getch();
 
+/* showMaster allows the program to display the three foundational features of the Quiz Game
+	@feature - "Manage Data"
+	@feature - "Play"
+	@feature - "Exit"
+*/ 
 int 
 showMaster(){
 	
@@ -289,7 +317,9 @@ showMaster(){
 	return choice;
 }
 
-
+/* getPassword allows the user to input a password in order to access the Records
+	@param *password - points to the address of String20 password
+*/ 
 void 
 getPassword(String20 *password){
 	
@@ -304,25 +334,32 @@ getPassword(String20 *password){
 		
 				for(i=0;i<8;i++) {
 			 		ch=getch();
-		 			password = ch;
+		 			password[i] = ch;
 			 		ch = '*';
 			 		printf("%c", ch);
 			 	}
 				 
-				 password="";
+				 password[i]="";
 				 	
 			} else {
 				printf("Please enter the existing password :> %s", password);
 				scanf("%s", temp);
+				if((strcmp(password, temp))==0) {
+					printf("correct password");
+				}
 			}
 		// password feature
 }
+
+/* showManageDataMenu provides the skeleton for the "Manage Data" menu
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+	@param *password - points to the address of String20 password
+*/ 
 int 
-showManageDataMenu(struct record *A, int s){
+showManageDataMenu(struct record *A, int s, String20 *password){
 	int choice,temp,cmp,i;
 	char ch;
-	String20 password;
-	strcpy(password,"");
 	getPassword(password);
 	do
 	{ 	
@@ -376,6 +413,10 @@ showManageDataMenu(struct record *A, int s){
 	return choice;
 }
 
+/* showManageDataSubMenu provides the interface for the user to either add, display, edit, delete, import, export, records
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 int 
 showManageDataSubMenu(){
 	int selected;
@@ -443,17 +484,24 @@ showManageDataSubMenu(){
 //		return -1;
 //}
 
-// play function
+/* play allows the user to answer random questions under a certain topic choice
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 void
-play(){
-	String30 players[30];
-	String30 player_current;
-	int i;
+play(struct record *A, int s, struct score *B, int t){
+	FILE *fp;
+	String30 playerCurrent;
+	int i, accScore;
 	char ch;
+
+	// load "score.txt" file
+	fp=fopen("score.txt", wb+);
+
 	// ask for player name
 		printf("Enter your player name : ");
 		scanf("%c", &ch);
-		getString30(&player_current);
+		getString30(&playerCurrent);
 		
 //		if player_current not/is in players?
 		
@@ -475,13 +523,18 @@ play(){
 			// accumulated score
 			// go back to menu
 		// else go back to answer question
+	fclose(fp);
 }
 // view scores function
 
 // exit quiz game menu function?
 
+/* showQuizGameMenu allows the user to answer random questions under a certain topic choice
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/
 int 
-showQuizGameMenu(struct record *A, int s){
+showQuizGameMenu(struct record *A, int s, struct score *B, int t){
 	int choice,temp;
 	do
 	{
@@ -492,7 +545,7 @@ showQuizGameMenu(struct record *A, int s){
 			case 1:
 			{
 				// play feature
-				play();
+				play(A,s,B,t);
 				break;
 			}
 			case 2:
@@ -536,11 +589,12 @@ showQuizGameSubMenu(){
 
 int 
 main() {
-	
-	char password[10]; 
-	
-	struct record quizRecord[SIZE];
-	
+	 
+	String20 password;
+	strcpy(password, "");
+
+	struct record quizRecord[SIZE]; // struct for the amount of Quiz Questions
+	struct score quizScores[SIZE]; // struct for the amount of playes and their scores
 	int choice;
 	
 	int flag = 1, temp = 0;
@@ -551,12 +605,12 @@ main() {
 		{
 			case 1: 
 			{
-				showManageDataMenu(quizRecord, SIZE);
+				showManageDataMenu(quizRecord, SIZE, password);
 				break;
 			}
 			case 2: 
 			{
-				showQuizGameMenu(quizRecord, SIZE);
+				showQuizGameMenu(quizRecord, SIZE, quizScores, SIZE);
 				break;
 			}
 			case 3:
@@ -579,49 +633,11 @@ main() {
 	return 0;
 }
 
-// Menu options and transitions
-
-/* MANAGE DATA SEGMENT*/
-
-// ask for a password [password entry]
-	// char password[20], ch;
-	// int i;
-	
-	// do{
-	// 	printf("Enter the password <any 20 characters> : ");
-	
-	// 	for(i=0;i<20;i++) {
-	// 		ch = getch();
-	// 		password[i] = ch;
-	// 		ch = "*";
-	// 		printf("%c", ch);
-	// 	}	
-	// }while()
-	// password entry
-	// password store
-
-// import data
-
-// export data
-
-// struct for questions record
-
-// display for questions
-
-// go back to main menu
-
-/* QUIZ GAME SEGMENT*/
-
-// Play
-// structs
 
 // View Scores
 
 // Exit
 
 /* EXIT SEGMENT */
-
-
-// Preliminary outline of functions to be created
 
 
