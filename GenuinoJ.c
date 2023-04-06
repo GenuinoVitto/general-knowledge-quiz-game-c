@@ -289,33 +289,43 @@ showMaster(){
 	return choice;
 }
 
+
+void 
+getPassword(String20 *password){
+	
+	String20 temp;
+	int i;
+	char ch;
+	// password feature
+		printf("%d", strlen(password));
+			if(strlen(password)==0)
+			{
+				printf("There is no existing password, please enter one :> : ");
+		
+				for(i=0;i<8;i++) {
+			 		ch=getch();
+		 			password = ch;
+			 		ch = '*';
+			 		printf("%c", ch);
+			 	}
+				 
+				 password="";
+				 	
+			} else {
+				printf("Please enter the existing password :> %s", password);
+				scanf("%s", temp);
+			}
+		// password feature
+}
 int 
 showManageDataMenu(struct record *A, int s){
 	int choice,temp,cmp,i;
 	char ch;
-	String20 password, temp2;
+	String20 password;
+	strcpy(password,"");
+	getPassword(password);
 	do
-	{ 
-		// password feature
-		strcpy(password, "none");
-		strcpy(temp2, "empty");
-			printf("%s",password);
-			if((strcmp(password,"none"))==0)
-			{
-				printf("There is no existing password, please enter one :> : ");
-		
-				for(i=0;i<20;i++) {
-			 		ch=getch();
-		 			password[i] = ch;
-			 		ch = '*';
-			 		printf("%c", ch);
-			 	}	
-			} else {
-				printf("Please enter the existing passcode :> %s", password);
-				scanf("%s", temp2);
-			}
-		// password feature
-		
+	{ 	
 		choice = showManageDataSubMenu();
 		switch(choice)
 		{
@@ -398,13 +408,58 @@ showManageDataSubMenu(){
 }
 
 
+//int
+//Binary_Search(String param_lastname, String param_firstname, struct studentTag STUDENTS[], int nStudents)
+//{
+//    // Encode your solution.
+//    int low=0, high=nStudents-1, mid, cmp;
+//    int found = 0;
+//    
+//    while(!found&&low<=high){
+//    	mid=low+(high-low)/2;
+//    	cmp = strcmp(STUDENTS[mid].name.last, param_lastname);
+//    	if(!cmp)
+//    		cmp = strcmp(STUDENTS[mid].name.first, param_firstname);
+//    	
+//    // positive cmp means current is greater
+//    	if(!cmp){
+//    		found=1;
+//		} else if (cmp>0){
+//			high=mid-1;
+//		} else {
+//			low=mid+1;
+//		}
+////    	if(param_lastname == STUDENTS[mid].name.last && param_firstname == STUDENTS[mid].name.first)
+////    		found = 1;
+////    	else if(param_lastname < STUDENTS[mid].name.last && param_firstname < STUDENTS[mid].name.first)
+////    		high=mid-1;
+////		else
+////			low=mid+1;
+//	}
+//	
+//	if(found)
+//		return mid;
+//	else
+//		return -1;
+//}
+
 // play function
 void
 play(){
+	String30 players[30];
+	String30 player_current;
+	int i;
+	char ch;
 	// ask for player name
-	
+		printf("Enter your player name : ");
+		scanf("%c", &ch);
+		getString30(&player_current);
+		
+//		if player_current not/is in players?
+		
+		
 	// choose from topics
-	
+		
 	// display random question (under topic)
 	
 	// answer question
@@ -437,7 +492,7 @@ showQuizGameMenu(struct record *A, int s){
 			case 1:
 			{
 				// play feature
-				// play();
+				play();
 				break;
 			}
 			case 2:
