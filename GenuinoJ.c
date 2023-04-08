@@ -17,7 +17,7 @@ int showManageDataMenu();
 int showManageDataSubMenu();
 int showQuizGameMenu();
 int showQuizGameSubMenu();
-void getSentence();
+
 
 // typedefs
 typedef char String20[20];
@@ -53,11 +53,11 @@ struct score {
 	@param *ptr - points to address of passed String20 variable instance
 */ 
 void
-getString20(String20 *ptr)
+getString20(String20 s)
 {
 	char ch;
 	int i = 0;
-	String20 string;
+	String20 string2;
 	
 	do
 	{
@@ -65,24 +65,24 @@ getString20(String20 *ptr)
 		
 		if(ch != '\n')
 		{
-			string[i] = ch;
+			s[i] = ch;
 			i++;
-			string[i] = '\0';
+			s[i] = '\0';
 		}
 	}while (i < 21 && ch != '\n');
 	
-	strcpy(*ptr, string);
+//	strcpy(*ptr2, string2);
 } 
 
 /* getString30 is a void function that allows the user to to input String30
 	@param *ptr - points to address of passed String30 variable instance
 */
 void
-getString30(String30 *ptr)
+getString30(String30 s)
 {
 	char ch;
 	int i = 0;
-	String30 string;
+	String30 string3;
 	
 	do
 	{
@@ -90,24 +90,24 @@ getString30(String30 *ptr)
 		
 		if(ch != '\n')
 		{
-			string[i] = ch;
+			s[i] = ch;
 			i++;
-			string[i] = '\0';
+			s[i] = '\0';
 		}
 	}while (i < 31 && ch != '\n');
 	
-	strcpy(*ptr, string);
+//	strcpy(*ptr3, string3);
 }
 
 /* getSentence is a void function that allows the user to to input a Sentence
 	@param *ptr - points to address of passed Sentence variable instance
 */
 void
-getSentence(Sentence *ptr)
+getSentence(Sentence s)
 {
 	char ch;
 	int i = 0;
-	Sentence question;
+	Sentence a;
 	
 	do
 	{
@@ -115,13 +115,13 @@ getSentence(Sentence *ptr)
 		
 		if(ch != '\n')
 		{
-			question[i] = ch;
+			s[i] = ch;
 			i++;
-			question[i] = '\0';
+			s[i] = '\0';
 		}
 	}while (i < 151 && ch != '\n');
 	
-	strcpy(*ptr, question);
+//	strcpy(*ptr4, a);
 }
 
 /* binarySearch is a void function that allows the user to to input a Sentence
@@ -151,7 +151,7 @@ binarySearch(Sentence *param1, String30 *param2, struct record *A, int s)
 	}
 	
 	if(found)
-		return 1;
+		return mid;
 	else
 		return -1;
 }
@@ -163,57 +163,36 @@ binarySearch(Sentence *param1, String30 *param2, struct record *A, int s)
 void
 getInput(struct record *A, int s)
 {
-	int j, current = s-1, yes=0;
+	int j, current = s-1, found=0;
 	char c;
 	Sentence questionTemp;
 	String30 answerTemp;
 	
-	printf("Enter question: ");
-	getSentence(&questionTemp);
-	printf("\nEnter answer: ");
-	getString30(&answerTemp);
+	
+	do{
+		scanf("%c", &c);
+		printf("Enter question:");
+		getSentence(questionTemp);
+		printf("\nEnter answer:");
+		getString30(answerTemp);
 		
-	yes = binarySearch(questionTemp, answerTemp, A, s);
-	printf("\nfound = %d", yes);
-	if(yes==1){
-		printf("you have entered an existing pair of q&a");
-	} else {
-		printf("you have entered a non-existing pair of q&a");
-		
-		// enter last three fields
-		// question number should already be assigned
-		if(((A+current)->questionNumber) > 0) // for adding 1 record, check if time has value
-		{
-			printf("%d", (A+current)->questionNumber);
-			printf("\nEnter topic1: ");
-//			scanf("%s", &(A+s)->topic);
-			getString20(&((A+s)->topic));
-//			scanf("%s", &((A+i)->topic));
-			printf("Enter question number: ");
-			scanf("%d", &((A+s)->questionNumber));
-			scanf("%c", &c);// for new line in between int and characters
-//			printf("Enter question: ");
-//			getSentence(&((A+i)->question));
-			strcpy((A+s)->question, questionTemp);
-			printf("Enter choice1: ");
-			getString30(&((A+s)->choice1));
-			printf("Enter choice2: ");
-			getString30(&((A+s)->choice2));
-			printf("Enter choice3: ");
-			getString30(&((A+s)->choice3));
-//			printf("Enter answer: ");
-//			getString30(&((A+i)->answer));
-			strcpy((A+s)->answer, answerTemp);
-		}
-		else
-		{
-			for(j=0; j < s/*change value to s after testing*/; j++)
+		found = binarySearch(questionTemp, answerTemp, A, s);
+		printf("\nFound = %d", found);
+		if(found!=-1){
+			printf("The entered Question and Answer has already been listed in the records.\n");
+			printf("%-10s %-10d %-30s %-10s %-10s %-10s %-10s\n", 
+			(A+found)->topic, (A+found)->questionNumber, (A+found)->question, 
+			(A+found)->choice1, (A+found)->choice2, (A+found)->choice3, (A+found)->answer);
+		} else {
+			printf("The entered Question and Answer does not exist in the records.\n");
+			
+			// enter last three fields
+			// question number should already be assigned
+			if(((A+current)->questionNumber) > 0) // for adding 1 record, check if questionNumber has value
 			{
-				printf("ITEM # %d", j+1);
+				printf("%d", (A+current)->questionNumber);
 				printf("\nEnter topic: ");
-				scanf("%s", &((A+s)->topic));
-				printf("topic = %s", (A+s)->topic);
-	//			scanf("%s", &((A+i)->topic));
+				getString20(&((A+s)->topic));
 				printf("Enter question number: ");
 				scanf("%d", &((A+s)->questionNumber));
 				scanf("%c", &c);// for new line in between int and characters
@@ -230,8 +209,33 @@ getInput(struct record *A, int s)
 	//			getString30(&((A+i)->answer));
 				strcpy((A+s)->answer, answerTemp);
 			}
-		}	
-	}
+			else
+			{
+				for(j=0; j < s/*change value to s after testing*/; j++)
+				{
+					printf("ITEM # %d", j+1);
+					printf("\nEnter topic: ");
+					getString20(&((A+j)->topic));
+					printf("topic = %s", (A+j)->topic);
+					printf("Enter question number: ");
+					scanf("%d", &((A+j)->questionNumber));
+					scanf("%c", &c);// for new line in between int and characters
+		//			printf("Enter question: ");
+		//			getSentence(&((A+i)->question));
+					strcpy((A+j)->question, questionTemp);
+					printf("Enter choice1: ");
+					getString30(&((A+j)->choice1));
+					printf("Enter choice2: ");
+					getString30(&((A+j)->choice2));
+					printf("Enter choice3: ");
+					getString30(&((A+j)->choice3));
+		//			printf("Enter answer: ");
+		//			getString30(&((A+i)->answer));
+					strcpy((A+j)->answer, answerTemp);
+					}
+				}	
+			}
+		}while(found!=-1);
 } // fix logic
 
 /* displayStruct allows the user to display the records for the Quiz Game
@@ -244,7 +248,7 @@ displayStruct(struct record A[], int s)
 	int i;
 	printf("\n%-10s %-10s %-20s %-10s %-10s %-10s %-10s\n", "Topic", "Number", "Question", "Choice 1", "Choice 2", "Choice 3", "Answer");
 	
-		for(i=0; i < 2/*change value to s after testing*/; i++)
+		for(i=0; i < s; i++)
 		{
 			printf("%-10s %-10d %-30s %-10s %-10s %-10s %-10s\n", (A+i)->topic, (A+i)->questionNumber, (A+i)->question, (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		}
@@ -417,7 +421,7 @@ showMaster(char password[], struct record *A, int s){
 	@param *password - points to the address of String20 password
 */ 
 int
-getPassword(char password[]){
+getPassword(char *password){
 	
 	// password is set to ""
 	
@@ -430,19 +434,19 @@ getPassword(char password[]){
 			if(strlen(password)==0)
 			{
 				printf("There is no existing ADMIN password, please enter one: ");
-				while((ch2=_getch())!=13) {
-					password[i]=ch2;
-					i++;
-					printf("*");
-				}
-				password[i]='\0';
-//				for(i=0;i<8;i++) {					
-//			 		ch2=getch();
-//		 			password[i] = ch2;
-//			 		ch2 = '*';
-//			 		printf("%c", ch2);
-//			 	}
-//				 password[i]='\0';
+//				while((ch2=_getch())!=13) {
+//					password[i]=ch2;
+//					i++;
+//					printf("*");
+//				}
+//				password[i]='\0';
+				for(i=0;i<8;i++) {					
+			 		ch2=getch();
+		 			password[i] = ch2;
+			 		ch2 = '*';
+			 		printf("%c", ch2);
+			 	}
+				 password[i]='\0';
 				 return 1;
 				 	
 			} else {
@@ -481,7 +485,7 @@ showManageDataMenu(struct record *A, int s, int valid){
 			case 1:
 			{
 				// add record feature
-				addStruct(A, s);
+				s=addStruct(A, s);
 				break;
 			}
 			case 2:
@@ -704,8 +708,8 @@ main() {
 			{
 				printf("> Invalid Input\n");
 				printf("Please enter any key to proceed with another choice : ");
-				temp=getch();
-				system("cls");
+				scanf(" %c", &temp);
+//				system("cls");
 				break;
 			}
 		}
