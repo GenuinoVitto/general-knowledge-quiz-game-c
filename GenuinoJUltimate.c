@@ -1,7 +1,8 @@
 // #includes
 #include <stdio.h>
-#include <conio.h>
 #include <string.h>
+#include <conio.h>
+#include <stdlib.h>
 
 /***************************General Knowledge Quiz Game*****************************
 Author: Jose Mari Victorio G. Genuino
@@ -43,7 +44,7 @@ struct record {
 };
 // struct that will store data about a player and his/her score record
 struct score {
-	int playerNum;
+	int rowNum;
 	char playerName[20];
 	int score;
 };
@@ -447,15 +448,42 @@ int deleteRecord(struct record *A, int s){
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
-void importData(){
+void importData(struct record *A, int s){
+	char filename[30];
+	FILE *fp;
+	char c;
 	
+	printf("Input filename : ");
+	getString30(filename);
+	
+	if((fp=fopen(filename, "r"))==NULL){ // open in "read" mode
+		printf("ERROR: %s does not exist.\n", filename);
+		exit(1);
+	} else {
+		printf("%s was opened successfully.\n", filename);
+		while((fscanf(fp, "%c", &c))==1)
+			fprintf(stdout, "%c", ch);
+	}
+	fclose(fp);	
 }
 /* exportData is a void function that allows the user to write a list of entries to a given text file
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
-void exportData(){
+void exportData(struct record *A, int s){
+	char filename[30];
+	FILE *fp;
 	
+	printf("Input filename : ");
+	getString30(filename);
+	
+	if((fp=fopen(filename, "w"))==NULL){ // open in "write" mode
+		printf("ERROR: %s does not exist.\n", filename);
+		exit(1);
+	} else {
+		printf("%s was opened successfully.\n", filename);
+	}
+	fclose(fp);
 }
 /* showManageDataMenu provides the interface for the user to either add, display, edit, delete, import, export, records and returns an integer
 */ 
@@ -514,14 +542,17 @@ void manageData(struct record *A, int s){
 				}
 			case 4: // Delete record
 				{
+//					deleteRecord(A,s);
 					break;
 				}
 			case 5: // Import data
 				{
+//					importData(A,s);
 					break;
 				}
 			case 6: // Export data
 				{
+//					exportData(A,s);
 					break;
 				}
 			case 7: // Go back to MAIN MENU
@@ -555,51 +586,87 @@ int randomNumber(int minNum, int maxNum){
 	@param <param name-instance> - <description>
 	@param <param name-instance> - <description>
 */
-void corePlay(){
+void corePlay(struct record *A, int s, struct score *B, int t){
 	int s;
-	// add accScore variable
-	// add score variable pointer?
+	int accScore=0;
+	
 	int random=randomNumber(0,s);
 	char c, playerName[20];
 	printf("\nrandom = %d", random);
 	scanf(" %c",&c);
 	
-	// ask for player name
-	printf("Please enter your IGN (in-game name) : ");
-	getString20(playerName);
+	do{
+		// ask for player name
+		printf("\nPlease enter your IGN (in-game name) : ");
+		getString20(playerName);
+		
+		// choose from topics
+		
+		// display random question (under topic)
+		
+		// answer 
+		
+		// score? or not?
+		if(cmp==0){
+			accScore++;
+		} else {
+			printf("\nSorry, the answer you chose is incorrect.");
+			// ask for another topic and generate another question
+			//--------------Input   Answer   Here-----------------
+		}
+		// keep displaying current score of player
+		printf("Current Score is %d", accScore);
+		
+		// display end game option
+		printf("\nWould you like to try again? : ");
+		scanf(" %c", &c);
+	}while(c=='y'||c=='Y');
 	
-	// choose from topics
-	
-	// display random question (under topic)
-	
-	// answer 
-	
-	// score? or not?
-	
-	// display end game option
-	
-	// while loop [!= chosen]
-	
+	// if end game option is chosen, display message and acc score 
+	exit();
+	printf("\n\n");
+	showScore(B,t);
+	// Go back to Main Menu	
 }
 /* showScores is a void function that allows the user to view all scores of the General Knowledge Quiz Game
 	@param <param name-instance> - <description>
 	@param <param name-instance> - <description>
 */
-void showScores(){
-	
+void showScore(struct score *B, int t){
+	// read imported file?
+	int i;
+	for(i=0;i<t;i++){
+		printf("\n\tRow # %d\tPlayer Name : %s\tScore | %d", (B+i)->rowNum,(B+i)->playerName,(B+i)->score);
+	}
 }
 /* showPlayMenu provides the interface for the user to either play, view scores, or go back to main menu and returns an integer
 	@param <param name-instance> - <description>
 	@param <param name-instance> - <description>
 */
 int showPlayMenu(){
+	int choice;
+	do{
+//		system("cls");
+		printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MANAGE DATA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 1| Play            	  \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 2| View Scores              \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2 3| Exit                     \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
+		printf("		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n");
+		printf("\nPlease enter your choice : ");
+		scanf("%d", &choice);
+	}while((choice<1)||(choice>3));
 	
+	return choice;
 }
 /* play is a void function that provides the skeleton for the "Play" menu
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */
-void play(struct record *A, int s){
+void play(struct record *A, int s, struct score *B, int t){
 	int flag=1, choice;
 	char c;
 	
@@ -609,13 +676,13 @@ void play(struct record *A, int s){
 			case 1:
 				{
 					// core play 
-					corePlay();
+					corePlay(A,s,B,t);
 					break;
 				}
 			case 2:
 				{
 					// view scores 
-					showScores();
+					showScore(B,t);
 					break;
 				}
 			case 3:
@@ -670,7 +737,7 @@ int main(){
 				}
 			case 2:
 				{
-					play(quizRecord,5);
+					play(quizRecord,5,quizScores,5);
 					break;	
 				}
 			case 3:
