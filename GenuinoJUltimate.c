@@ -3,12 +3,12 @@
 #include <conio.h>
 #include <string.h>
 
-/***************************General Knowledge Quiz Game****************************
-Auhtor: Jose Mari Victorio G. Genuino
+/***************************General Knowledge Quiz Game*****************************
+Author: Jose Mari Victorio G. Genuino
 Date Started: 7 February 2023
 Date Finished: 10 April 2023 
 Purpose: CCPROG2 [Machine Project]
-**********************************************************************************/
+***********************************************************************************/
 
 /********************************Acknowledgement************************************
 ************************************************************************************
@@ -47,8 +47,7 @@ struct score {
 	char playerName[20];
 	int score;
 };
-
-/* showMaster allows the program to display the three foundational features of the Quiz Game
+/* showMainMenu allows the program to display the three foundational features of the Quiz Game
 	@feature - "Manage Data"
 	@feature - "Play"
 	@feature - "Exit"
@@ -70,8 +69,7 @@ int showMainMenu(char password[]){
 	scanf("%d", &choice);
 	return choice;
 }
-
-/* getPassword allows the user to input a password in order to access the Records
+/* getPassword allows the user to input a password in order to access the Records and returns an integer
 	@param *password[] - points to the address of char array password
 */ 
 int getPassword(char *password[]){
@@ -252,7 +250,7 @@ void showAll(struct record A[], int s){
 		printf("\n\nA.%s\t\tB.%s\n\nC.%s\t\tAnswer = %s", (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 	}
 }
-/* getInput allows the user to input a record for the Quiz Game given certain conditions
+/* getInput is a void function that allows the user to input a record for the Quiz Game given certain conditions
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */
@@ -310,7 +308,7 @@ void getInput(struct record *A, int s){
 	}while(i<s&&(c=='y'||c=='Y')); //implement feature where you could change value of s 
 	
 }
-/* addRecord allows the user to input additional records for the Quiz Game
+/* addRecord allows the user to input additional records for the Quiz Game and returns an integer
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
@@ -318,30 +316,27 @@ int addRecord(struct record *A, int s){
 	getInput(A,s);
 	return s+1; // implement pointer to s
 }
-/* compareTwoString is just proxy code for the strcmp(); function
+/* compareTwoString is just proxy code for the strcmp(); function 
 	@param a[] - is a char array
 	@param b[] - is a char array
 */
-int compareTwoString(char a[],char b[])  
-{  
-    int flag=0,i=0;  // integer variables declaration  
-    while(a[i]!='\0' &&b[i]!='\0')  // while loop  
-    {  
-       if(a[i]!=b[i])  
-       {  
-           flag=1;  
-           break;  
-       }  
-       i++;  
-    } 
-    if(a[i]!='\0'||b[i]!='\0')
-       return 1;
-    if(flag==0)  
-    return 0;  
-    else  
-    return 1;  
+int compareTwoString(char a[], char b[]){  
+	int flag=0,i=0;    
+	while(a[i]!='\0' &&b[i]!='\0'){  
+	   if(a[i]!=b[i]){
+	   		flag=1;  
+	    	break;
+		}  
+	   i++;  
+	} 
+	if(a[i]!='\0'||b[i]!='\0')
+		return 1;
+	if(flag==0)  
+		return 0;  
+	else  
+		return 1;  
 }  
-/* editRecord allows the user to edit a record for the Quiz Game
+/* editRecord is a void function that allows the user to edit a record for the Quiz Game
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */
@@ -441,28 +436,28 @@ void editRecord(struct record *A, int s){
 	}
 //	scanf(" %c", &c);	
 }
-/* deleteRecord allows the user to delete a record for the Quiz Game
+/* deleteRecord allows the user to delete a record for the Quiz Game and returns an integer
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
 int deleteRecord(struct record *A, int s){
 	
 }
-/* importData allows the user to read a list of entries in a given text file
+/* importData is a void function that allows the user to read a list of entries in a given text file
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
 void importData(){
 	
 }
-/* exportData allows the user to write a list of entries to a given text file
+/* exportData is a void function that allows the user to write a list of entries to a given text file
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
 void exportData(){
 	
 }
-/* showManageDataMenu provides the interface for the user to either add, display, edit, delete, import, export, records
+/* showManageDataMenu provides the interface for the user to either add, display, edit, delete, import, export, records and returns an integer
 */ 
 int showManageDataMenu(){
 	int choice;
@@ -492,7 +487,7 @@ int showManageDataMenu(){
 	return choice;
 	
 }
-/* manageData provides the skeleton for the "Manage Data" menu
+/* manageData is a void function that provides the skeleton for the "Manage Data" menu
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */ 
@@ -586,21 +581,21 @@ void corePlay(){
 	// while loop [!= chosen]
 	
 }
-/* showScores allows the user to view all scores of the General Knowledge Quiz Game
+/* showScores is a void function that allows the user to view all scores of the General Knowledge Quiz Game
 	@param <param name-instance> - <description>
 	@param <param name-instance> - <description>
 */
 void showScores(){
 	
 }
-/* showPlayMenu provides the interface for the user to either play, view scores, or go back to main menu
+/* showPlayMenu provides the interface for the user to either play, view scores, or go back to main menu and returns an integer
 	@param <param name-instance> - <description>
 	@param <param name-instance> - <description>
 */
 int showPlayMenu(){
 	
 }
-/* play provides the skeleton for the "Play" menu
+/* play is a void function that provides the skeleton for the "Play" menu
 	@param *A - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed
 */
