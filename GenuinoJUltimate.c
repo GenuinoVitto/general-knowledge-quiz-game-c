@@ -1,7 +1,37 @@
+// #includes
 #include <stdio.h>
 #include <conio.h>
 #include <string.h>
 
+/***************************General Knowledge Quiz Game****************************
+Auhtor: Jose Mari Victorio G. Genuino
+Date Started: 7 February 2023
+Date Finished: 10 April 2023 
+Purpose: CCPROG2 [Machine Project]
+**********************************************************************************/
+
+/********************************Acknowledgement************************************
+************************************************************************************
+This is to certify that this project is my own work, based on my personal
+efforts in studying and applying the concepts learned. I have constructed the
+functions and their
+respective algorithms and corresponding code by myself. The program was run,
+tested, and debugged
+by my own efforts. I further certify that I have not copied in part or whole or
+otherwise plagiarized the
+work of other students and/or persons.
+***********************************************************************************
+**********************************************************************************/
+
+
+/* The following are the function prototypes for the functions used in this project */
+
+/*******************************************************************************************/
+
+
+/* The following are the structures defined using method 2 */
+
+// struct that will store data about a quiz question
 struct record {
 	char topic[20];
 	int questionNumber;
@@ -11,13 +41,18 @@ struct record {
 	char choice3[30];
 	char answer[30];
 };
-
+// struct that will store data about a player and his/her score record
 struct score {
 	int playerNum;
 	char playerName[20];
 	int score;
 };
 
+/* showMaster allows the program to display the three foundational features of the Quiz Game
+	@feature - "Manage Data"
+	@feature - "Play"
+	@feature - "Exit"
+*/ 
 int showMainMenu(char password[]){
 	int choice;
 	system("cls");
@@ -36,6 +71,9 @@ int showMainMenu(char password[]){
 	return choice;
 }
 
+/* getPassword allows the user to input a password in order to access the Records
+	@param *password[] - points to the address of char array password
+*/ 
 int getPassword(char *password[]){
 	
 	char userEntry[20];
@@ -100,7 +138,9 @@ int getPassword(char *password[]){
 	}
 	return 1;
 }
-
+/* getString20 is a void function that allows the user to to input a char array of size 20
+	@param *ptr - points to address of passed char array instance
+*/ 
 void getString20(char *ptr){
 	int i=0;
 	char c, s[20];
@@ -118,10 +158,12 @@ void getString20(char *ptr){
 			printf("%c",c);
 		}
 	}while(i<20&&c!='\r');
-	s[i]='\0';
+	s[i-1]='\0';
 	strcpy(ptr,s);
 }
-
+/* getString30 is a void function that allows the user to to input a char array of size 30
+	@param *ptr - points to address of passed char array instance
+*/
 void getString30(char *ptr){
 	int i=0;
 	char c, s[30];
@@ -139,10 +181,12 @@ void getString30(char *ptr){
 			printf("%c",c);
 		}
 	}while(i<30&&c!='\r');
-	s[i]='\0';
+	s[i-1]='\0';
 	strcpy(ptr,s);
 }
-
+/* getSentence is a void function that allows the user to to input a char array of size 150
+	@param *ptr - points to address of passed char array instance
+*/
 void getSentence(char *ptr){
 	int i=0;
 	char c, s[150];
@@ -160,10 +204,15 @@ void getSentence(char *ptr){
 			printf("%c",c);
 		}
 	}while(i<150&&c!='\r');
-	s[i]='\0';
+	s[i-1]='\0';
 	strcpy(ptr,s);
 }
-
+/* linearSearch is a void function that allows the program to locate a record given param1 or param2
+	@param *param1 - points to address of passed char variable instance
+	@param *param2 - points to address of passed char variable instance
+	@param struct record A[] - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed 
+*/
 int linearSearch(char *param1, char *param2, struct record A[], int s){
 	int i, cmp;
 	for(i=0;i<s;i++){
@@ -179,54 +228,34 @@ int linearSearch(char *param1, char *param2, struct record A[], int s){
 		}
 	}
 }
-
-int binarySearch(char *param1, char *param2, struct record A[], int s)
-{
-    // Encode your solution.
-    int low=0, high=s-1, mid, cmp;
-    int found=0;
-    
-    while(found==0&&low<=high){
-    	mid=low+(high-low)/2;
-    	cmp = strcmp(A[mid].question, param1);
-    	if(cmp==0)
-    		cmp = strcmp(A[mid].answer, param2);
-    	
-    // positive cmp means current is greater
-    	if(cmp==0){
-    		found=1;
-		} else if (cmp>0){
-			high=mid-1;
-		} else {
-			low=mid+1;
-		}
-	}
-	
-	if(found)
-		return mid;
-	else
-		return -1;
-}
-
-// shows single record
+/* showRecord is a void function that allows the user to view a record given the index of it
+	@param struct record A[] - points to the first index address of the array of records passed to the function
+	@param index - is the index of the record passed 
+*/
 void showRecord(struct record A[], int index){
+	printf("\nQuestion Topic %s", (A+index)->topic);
 	printf("\nQuestion Number #%d", (A+index)->questionNumber);
 	printf("\n\n%s", (A+index)->question);
 	printf("\n\nA.%s\t\tB.%s\n\nC.%s\t\tAnswer = %s", (A+index)->choice1, (A+index)->choice2, (A+index)->choice3, (A+index)->answer);
 }
-
-// shows all records
+/* showAll is a void function that allows the user to view all records 
+	@param struct record A[] - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/
 void showAll(struct record A[], int s){
 	int i;
 	
 	for(i=0;i<s;i++){
+		printf("\nQuestion Topic %s", (A+i)->topic);
 		printf("\nQuestion Number #%d", (A+i)->questionNumber);
 		printf("\n\n%s", (A+i)->question);
 		printf("\n\nA.%s\t\tB.%s\n\nC.%s\t\tAnswer = %s", (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 	}
 }
-
-// getInput
+/* getInput allows the user to input a record for the Quiz Game given certain conditions
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/
 void getInput(struct record *A, int s){
 	int i=0, current=s-1, found=0;
 	char c;
@@ -281,36 +310,77 @@ void getInput(struct record *A, int s){
 	}while(i<s&&(c=='y'||c=='Y')); //implement feature where you could change value of s 
 	
 }
-
-// addRecord
+/* addRecord allows the user to input additional records for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 int addRecord(struct record *A, int s){
 	getInput(A,s);
 	return s+1; // implement pointer to s
 }
-
-// editRecord
+/* compareTwoString is just proxy code for the strcmp(); function
+	@param a[] - is a char array
+	@param b[] - is a char array
+*/
+int compareTwoString(char a[],char b[])  
+{  
+    int flag=0,i=0;  // integer variables declaration  
+    while(a[i]!='\0' &&b[i]!='\0')  // while loop  
+    {  
+       if(a[i]!=b[i])  
+       {  
+           flag=1;  
+           break;  
+       }  
+       i++;  
+    } 
+    if(a[i]!='\0'||b[i]!='\0')
+       return 1;
+    if(flag==0)  
+    return 0;  
+    else  
+    return 1;  
+}  
+/* editRecord allows the user to edit a record for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/
 void editRecord(struct record *A, int s){
 	int ctr=0,cmp,cmp2,i,j,k;
-	int l,found;
-	char c,dump,choiceTopic[20];
+	int l,found,choiceQuestion;
+	char c,dump,dump2,choiceTopic[20],choiceField[20];
 	
+	struct record res[s];
+	int resSize=0;
 	// display all unique topics
-	printf("\nThe Unique topics are the following : ");
-	for(i=0;i<s;i++){
-		ctr=0;
-		for(j=0,k=s;j<k+1;j++){
-			cmp=strcmp((A+i)->topic,(A+j)->topic);
-			if(cmp!=0){
-				cmp=strcmp((A+i)->topic,(A+j)->topic);
-				if(cmp==0){
-					ctr++;
-				}
-			}
+	for(i = 0; i < s; i++){
+        ctr = 0;
+        for(j = 0; j < s; j++){
+        	cmp=strcmp((A+i)->topic,(A+j)->topic);
+            if(cmp==0){
+                ctr++;
+            }
+        }
+        if(ctr > 0){
+            found = 0;
+            for(k = 0; k < resSize; k++){
+            	cmp=strcmp((res+k)->topic,(A+i)->topic);
+                if(cmp==0){
+                    found = 1;
+                }
+            }
+            if(!found){
+                strcpy(res[resSize++].topic,(A+i)->topic);
+            }
+        }
+    }
+    for(i = 0; i < resSize; i++){
+    	int length=strlen(res[i].topic);
+        for(j=0;j<length;j++){
+        	printf("%c",res[i].topic[j]);
 		}
-		if(ctr==0){
-			printf("\n | %s", (A+i)->topic);
-		}
-	}
+    }
+    
 	
 	// choose topic
 	printf("\nPlease choose a topic : ");
@@ -318,27 +388,82 @@ void editRecord(struct record *A, int s){
 	scanf("%c",&dump);
 	
 	for(l=0;l<s;l++){
-		printf("hello\n");
-		printf("compare: %s with: %s", (A+l)->topic, choiceTopic);
-		printf("\nrecord topic: %s", (A+l)->topic);
-		printf("\nuser choice topic: %s", choiceTopic);
-		cmp=strcmp((A+l)->topic, choiceTopic);
-		printf("\n%d", cmp);
+		cmp=strcmp((A+l)->topic,choiceTopic);
 		if(!cmp){
 			showRecord(A,l);
 		}
 	}
-	scanf(" %c", &c);
 	
+	printf("\nPlease enter the question number of your desired question : ");
+	scanf("%d", &choiceQuestion);
 	
+	for(l=0;l<s;l++){
+		if(choiceQuestion==(A+l)->questionNumber){
+			printf("\nEditing...");
+			showRecord(A,choiceQuestion);
+			printf("\nWhich field do you want to edit? : ");
+			getString20(choiceField);
+			scanf("%c",&dump2);
+			int cmpTopic=strcmp("topic",choiceField);
+			printf("choiceField length = %d", strlen(choiceField));
+			printf("\ncmpTopic = %d",cmpTopic);
+			if(cmpTopic==0){
+				printf("\nEnter topic : ");
+				getString20(&((A+l)->topic));
+			}
+			int cmpQuestion=strcmp("question",choiceField);
+			if(cmpQuestion==0){
+				printf("\nEnter question : ");
+				getSentence(&((A+l)->question));
+			}
+			int cmpChoiceOne=strcmp("choice1",choiceField);
+			if(cmpChoiceOne==0){
+				printf("\nEnter choice 1 : ");
+				getString30(&((A+l)->choice1));
+			}
+			int cmpChoiceTwo=strcmp("choice2",choiceField);
+			if(cmpChoiceTwo==0){
+				printf("\nEnter choice 2 : ");
+				getString30(&((A+l)->choice2));
+			}
+			int cmpChoiceThree=strcmp("choice3",choiceField);
+			if(cmpChoiceThree==0){
+				printf("\nEnter choice 3 : ");
+				getString30(&((A+l)->choice3));
+			}
+			int cmpAnswer=strcmp("answer",choiceField);
+			if(cmpAnswer==0){
+				printf("\nEnter answer : ");
+				getString30(&((A+l)->answer));
+			}
+			break;
+		}
+	}
+//	scanf(" %c", &c);	
+}
+/* deleteRecord allows the user to delete a record for the Quiz Game
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
+int deleteRecord(struct record *A, int s){
 	
 }
-// deleteRecord
-
-// exportData
-
-// importData
-
+/* importData allows the user to read a list of entries in a given text file
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
+void importData(){
+	
+}
+/* exportData allows the user to write a list of entries to a given text file
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
+void exportData(){
+	
+}
+/* showManageDataMenu provides the interface for the user to either add, display, edit, delete, import, export, records
+*/ 
 int showManageDataMenu(){
 	int choice;
 	do{
@@ -367,7 +492,10 @@ int showManageDataMenu(){
 	return choice;
 	
 }
-
+/* manageData provides the skeleton for the "Manage Data" menu
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/ 
 void manageData(struct record *A, int s){
 	int flag=1, choice;
 	
@@ -409,8 +537,10 @@ void manageData(struct record *A, int s){
 		}
 	}
 }
-
-// get random number function
+/* randomNumber allows the program to return a random number in a given range
+	@param minNum - is the lower bound of the range
+	@param maxNum - is the upper bound of the range
+*/
 int randomNumber(int minNum, int maxNum){
 	int result=0,lowNum=0,highNum=0;
 	
@@ -426,15 +556,92 @@ int randomNumber(int minNum, int maxNum){
 	
 	return result;
 }
-
-void play(struct record *A, int s){
+/* corePlay is the core function of the play feature of this General Knowledge Quiz Game
+	@param <param name-instance> - <description>
+	@param <param name-instance> - <description>
+*/
+void corePlay(){
+	int s;
+	// add accScore variable
+	// add score variable pointer?
 	int random=randomNumber(0,s);
-	char c;
+	char c, playerName[20];
 	printf("\nrandom = %d", random);
 	scanf(" %c",&c);
 	
+	// ask for player name
+	printf("Please enter your IGN (in-game name) : ");
+	getString20(playerName);
+	
+	// choose from topics
+	
+	// display random question (under topic)
+	
+	// answer 
+	
+	// score? or not?
+	
+	// display end game option
+	
+	// while loop [!= chosen]
+	
 }
-
+/* showScores allows the user to view all scores of the General Knowledge Quiz Game
+	@param <param name-instance> - <description>
+	@param <param name-instance> - <description>
+*/
+void showScores(){
+	
+}
+/* showPlayMenu provides the interface for the user to either play, view scores, or go back to main menu
+	@param <param name-instance> - <description>
+	@param <param name-instance> - <description>
+*/
+int showPlayMenu(){
+	
+}
+/* play provides the skeleton for the "Play" menu
+	@param *A - points to the first index address of the array of records passed to the function
+	@param s - is the size of the array of records passed
+*/
+void play(struct record *A, int s){
+	int flag=1, choice;
+	char c;
+	
+	while(flag){
+		choice=showPlayMenu();
+		switch(choice){
+			case 1:
+				{
+					// core play 
+					corePlay();
+					break;
+				}
+			case 2:
+				{
+					// view scores 
+					showScores();
+					break;
+				}
+			case 3:
+				{
+					// Go back to MAIN MENU
+					flag=0; 
+					break;
+				}
+			default:	
+				{
+					system("cls");
+					printf("Invalid Input\n");
+					printf("Please enter any letter to proceed with another choice : ");
+					scanf(" %c", &c);
+					break;
+				} 
+		}
+	}
+}
+/* exit provides the interface for user exit
+*/
 void exit(){
 	system("cls");
 		printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2    EXIT    \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
@@ -443,9 +650,11 @@ void exit(){
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n");
 }
-// show main menu
+/* this is the main function of this General Knowledge Quiz Game
+*/
 int main(){
 	struct record quizRecord[5];
+	struct score quizScores[5];
 	int flag=1, choice, isVerified=0; // verified for password
 	char password[20]={'\0'};
 	char c;
