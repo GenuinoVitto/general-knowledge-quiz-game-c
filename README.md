@@ -1,10 +1,9 @@
 # GenuinoJ
 
-This repository contains the [CCPROG2] Machine Project Submission of Jose Mari Victorio G. Genuino from section S23B
+This repository contains the [CCPROG2] Machine Project Submission of Jose Mari Victorio G. Genuino from section S23B under Prof. Jackylyn L. Beredo
 
 Files Include: 
  - Main Machine Project Source Code ["GenuinoJ.c"]
- - Prototypes Source Code ["prototype.c"]
- - Code Segments Source Code ["CodeSegments.c"]
+ - Sample Record Data ["sample-records-updated.txt"]
 
  Generated Access Token : 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
