@@ -5,22 +5,26 @@
 #include <stdlib.h>
 
 /***************************General Knowledge Quiz Game*****************************
+
 Author: Jose Mari Victorio G. Genuino
 Date Started: 7 February 2023
-Date Finished: 10 April 2023 
+Date Finished: 11 April 2023 
 Purpose: CCPROG2 [Machine Project]
+
+-------------------------------------Disclaimer------------------------------------ 
+	Variable value checkers throughout the program may be found as in-line comments	
+-----------------------------------------------------------------------------------
+								
 ***********************************************************************************/
 
 /********************************Acknowledgement************************************
 ************************************************************************************
-This is to certify that this project is my own work, based on my personal
-efforts in studying and applying the concepts learned. I have constructed the
-functions and their
-respective algorithms and corresponding code by myself. The program was run,
-tested, and debugged
-by my own efforts. I further certify that I have not copied in part or whole or
-otherwise plagiarized the
-work of other students and/or persons.
+	This is to certify that this project is my own work, based on my personal
+	efforts in studying and applying the concepts learned. I have constructed the
+	functions and their respective algorithms and corresponding code by myself. 
+	The program was run, tested, and debugged by my own efforts. I further certify 
+	that I have not copied in part or whole or otherwise plagiarized the work of 
+	other students and/or persons.
 											Jose Mari Victorio G. Genuino, 11944692
 ***********************************************************************************
 **********************************************************************************/
@@ -55,8 +59,12 @@ struct score {
 int showMainMenu(char password[]){
 	int choice;
 	system("cls");
-//	printf("password = %s", password);
-	printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
+	
+	/* for checking the set User ADMIN password
+		printf("password = %s", password);
+	*/
+	
+	printf("\n\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
 	printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 	printf("		\xDB\xDB\xDB\xDB\xB2 1| Manage Data     	  \xB2\xDB\xDB\xDB\xDB\n\n");
 	printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
@@ -65,7 +73,7 @@ int showMainMenu(char password[]){
 	printf("		\xDB\xDB\xDB\xDB\xB2 3| Exit                     \xB2\xDB\xDB\xDB\xDB\n\n");
 	printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 	printf("		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n");	
-	printf("\nPlease enter your choice : ");
+	printf("\n\t\tPlease enter your choice : ");
 	scanf("%d", &choice);
 	return choice;
 }
@@ -73,13 +81,17 @@ int showMainMenu(char password[]){
 	@param *password[] - points to the address of char array password
 */ 
 int getPassword(char *password[]){
-	
 	char c, d, userEntry[20];
 	int i=0;
 	
-	if(strlen(password)==0){
-		printf("ADMIN password does not exist.\n");
-		printf("Please enter one : ");
+	if(strlen(password)==0){ // if password has no value
+		system("cls");
+		printf("\n\t\t\t---------------------------------------------------\n");
+		printf("\n\t\t\t---------- ADMIN password does not exist ----------\n");
+		printf("\n\t\t\t---------------------------------------------------\n");
+		printf("\n\t\t\t      Please enter one : ");
+			
+			// do-while loop for getting password
 			do{
 				c=getch();
 				if(c==127||c==8){
@@ -93,27 +105,36 @@ int getPassword(char *password[]){
 					i++;
 				}
 			}while(i<8&&c!='\r');
-		
+			
 		userEntry[i-1]='\0'; // remove "enter" input from userEntry for string comparison
-		printf("\nYou entered password : %s\n", userEntry);
-		strcpy(password, userEntry);
-	} else { // compare with existing password
-		printf("ADMIN password exists.\n");
-		printf("Please enter the existing password : ");
 		
-		do{
-			c=getch();
-			if(c==127||c==8){
-				if(i!=0){
-					i--;
-					printf("\b \b");
+		/* to check User-entered password
+			 printf("\n\t\t\t      You entered password : %s\n", userEntry);
+		*/
+		
+		strcpy(password, userEntry);
+		
+	} else { // compare with existing password
+		system("cls");
+		printf("\n\t\t\t---------------------------------------------------\n");
+		printf("\n\t\t\t-------------- ADMIN password exists --------------\n");
+		printf("\n\t\t\t---------------------------------------------------\n");
+		printf("\n\t\t\t      Please enter password : ");
+			// do-while loop for getting password
+			do{
+				c=getch();
+				if(c==127||c==8){
+					if(i!=0){
+						i--;
+						printf("\b \b");
+					}
+				} else {
+					userEntry[i]=c;
+					printf("*");
+					i++;
 				}
-			} else {
-				userEntry[i]=c;
-				printf("*");
-				i++;
-			}
-		}while(i<8&&c!='\r');
+			}while(i<8&&c!='\r');
+			
 		userEntry[i-1]='\0'; // remove "enter" input from userEntry for string comparison
 		
 		if((strcmp(password,userEntry))==0){
@@ -121,11 +142,12 @@ int getPassword(char *password[]){
 			printf("Access granted!\n");
 			return 1; // enter manageData
 		} else {
-			printf("\nNot Verified...");
-			printf("Access denied!\n");
-			printf("Please input the correct password.\n");
-			printf("\nType y or Y to enter another password.\n");
-			printf("\nType any other character to go back to MAIN MENU.\n");
+			printf("\n\n\t\t\t---------------------------------------------------\n");
+			printf("\n\t\t\t--------------  Verification Error! ---------------\n");
+			printf("\n\t\t\t-------------- Sorry, Access Denied --------------\n");
+			printf("\n\t\t\t---------------------------------------------------\n");
+			printf("\n\t\t\t Type 'y' or 'Y' to enter another password.\n");
+			printf("\n\t\t\t Type any other character to go back to MAIN MENU : ");
 			scanf(" %c",&d);
 			if(d=='y'||d=='Y')
 				return 0; // enter another password
@@ -147,7 +169,7 @@ void getString20(char *ptr){
 		if(c==127||c==8){
 			if(i!=0){
 				i--;
-				printf("\b \b");
+				printf("\b \b"); // take into account backspace
 			}
 		} else {
 			s[i]=c;
@@ -170,7 +192,7 @@ void getString30(char *ptr){
 		if(c==127||c==8){
 			if(i!=0){
 				i--;
-				printf("\b \b");
+				printf("\b \b"); // take into account backspace
 			}
 		} else {
 			s[i]=c;
@@ -193,7 +215,7 @@ void getSentence(char *ptr){
 		if(c==127||c==8){
 			if(i!=0){
 				i--;
-				printf("\b \b");
+				printf("\b \b"); // take into account backspace
 			}
 		} else {
 			s[i]=c;
@@ -213,12 +235,15 @@ void getSentence(char *ptr){
 int linearSearch(char *param1, char *param2, struct record A[], int s){
 	int i, cmp;
 	for(i=0;i<s;i++){
-//		printf("\n\n\ncompare : %s with : %s \n%s \n%s\n",A[0].question,param1, A[0].question, param1);
+		
+		/* for checking the strings being compared
+			printf("\n\n\ncompare : %s with : %s \n%s \n%s\n",A[0].question,param1, A[0].question, param1);
+		*/
 		cmp=strcmp(A[i].question, param1);
 		if(cmp==0){
 			cmp=strcmp(A[i].answer, param2);
 			if(cmp==0){
-				return i;
+				return i; // return index if found
 			}
 		} else {
 			return -1;
@@ -230,8 +255,7 @@ int linearSearch(char *param1, char *param2, struct record A[], int s){
 	@param index - is the index of the record passed 
 */
 void showRecord(struct record A[], int index){
-	printf("\n\t\t\t-------------------------------------------\n");
-	printf("\n\t\t\tQuestion Number [%d]", (A+index)->questionNumber);
+	printf("\n\t\t\t------------Question Number [%d]-----------\n", (A+index)->questionNumber);
 	printf("\n\t\t\tQuestion Topic : %s", (A+index)->topic);
 	printf("\n\n\t\t\tQuestion : %s", (A+index)->question);
 	printf("\n\n\t\t\tA.%s\t\tB.%s\n\n\t\t\tC.%s\t\tAnswer = %s", (A+index)->choice1, (A+index)->choice2, (A+index)->choice3, (A+index)->answer);
@@ -245,14 +269,13 @@ void showAll(struct record A[], int s){
 	int i;
 	char c;
 	for(i=0;i<s;i++){
-		printf("\n\t\t\t-------------------------------------------\n");
-		printf("\n\t\t\tQuestion Number [%d]", (A+i)->questionNumber);
+		printf("\n\t\t\t------------Question Number [%d]-----------\n", (A+i)->questionNumber);
 		printf("\n\t\t\tQuestion Topic : %s", (A+i)->topic);
 		printf("\n\n\t\t\tQuestion : %s", (A+i)->question);
 		printf("\n\n\t\t\tA.%s\t\tB.%s\n\n\t\t\tC.%s\t\tAnswer = %s", (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
 		printf("\n\n\t\t\t------------------------------------------\n");
 	}
-	printf("Please enter any letter to proceed : ");
+	printf("\n\t\t\tPlease enter any letter to proceed : ");
 	scanf(" %c", &c);
 }
 /* getInput is a void function that allows the user to input a record for the Quiz Game given certain conditions
@@ -267,46 +290,61 @@ void getInput(struct record *A, int s){
 	char userEntryAnswer[30];
 	 
 	do{
-		printf("\nEnter a question: ");
+		printf("\n\t\t\t------------- Preliminary Check ------------\n", (A+i)->questionNumber);
+		printf("\n\t\t\tEnter a question : ");
 		getSentence(userEntryQuestion);
-		
-		printf("\nEnter an answer: ");
+		printf("\n\n\t\t\t------------------------------------------\n");
+		printf("\n\t\t\tEnter the answer to your question : ");
 		getString30(userEntryAnswer);
+		printf("\n\n\t\t\t------------------------------------------\n");
 		
-		// for checking
-		// printf("\nQuestion Inputted: %s", userEntryQuestion);
-		// printf("\nAnswer Inputted: %s", userEntryAnswer);
+		/* for checking value of User-entered Question & Answer
+		 	printf("\nQuestion Inputted: %s", userEntryQuestion);
+		 	printf("\nAnswer Inputted: %s", userEntryAnswer); 
+		*/
 		
-		found=linearSearch(userEntryQuestion,userEntryAnswer,A,s); // returns index of found Q&A, if not found=-1
-		// printf("\nfound = %d", found);
+		// returns index of found Question & Answer, if not found=-1
+		found=linearSearch(userEntryQuestion,userEntryAnswer,A,s); 
+		
+		/* for checking value of integer variable "found"
+			printf("\nfound = %d", found);
+		*/
+		
 		if(found!=-1){
-			printf("\nThe entered Question and Answer has already been listed in the records.\n");
+			printf("\n\t\t\tThe entered Question & Answer already exists in the records.\n");
 			showRecord(A, found);
 			i--;
 		} else {
-			printf("\nThe entered Question and Answer does not exist in the records.\n");
-			printf("ITEM #%d", i+1);
-			printf("\nEnter topic: ");
-			getString20(((A+i)->topic));
+			printf("\n\t\t\tThe entered Question & Answer does not exist in the records.\n");
+			printf("\n\t\t\tGetting ITEM #%d...", i+1);
+			printf("\n\n\t\t\tEnter the topic of your question : ");
 			
+			// Enter topic
+			getString20(((A+i)->topic));
+			// Question number
 			(A+i)->questionNumber=i+1;
 			strcpy(((A+i)->question),userEntryQuestion);
-		
-			printf("Enter choice 1: ");
+			// Enter Choice 1
+			printf("\n\t\t\tEnter the 1st choice of your question : ");
 			getString30(((A+i)->choice1));
-			
-			printf("Enter choice 2: ");
+			// Enter Choice 2
+			printf("\n\t\t\tEnter the 2nd choice of your question : ");
 			getString30(((A+i)->choice2));
-			
-			printf("Enter choice 3: ");
+			// Enter Choice 3
+			printf("\n\t\t\tEnter the 3rd choice of your question : ");
 			getString30(((A+i)->choice3));
-			
+			// Question Answer
 			strcpy(((A+i)->answer),userEntryAnswer);
 		}
-		printf("\n\nExisting question: %s", (A+i)->question);
+		
+		/* for checking the current question being inputted
+			printf("\n\nExisting question: %s", (A+i)->question);
+		*/
+		
 		i++;
-		printf("\n\nWould you like to enter another Q&A?");
-		printf("\nEnter 'y' / 'n' (yes/no) : ");
+		printf("\n\n\t\t\tWould you like to enter another Question & Answer?");
+		printf("\n\n\t\t\tType 'y' or 'Y' to enter another.");
+		printf("\n\n\t\t\tType any other character to go back to MANAGE DATA MENU : ");
 		scanf(" %c", &c);		
 	}while(i<s&&(c=='y'||c=='Y'));  
 	
@@ -349,6 +387,7 @@ void editRecord(struct record *A, int s){
 	char c, choiceTopic[20];
 	struct record res[s];
 	
+	system("cls");
 	do{
 		// append all topics to struct record res array
 		for(i = 0; i < s; i++){
@@ -372,80 +411,89 @@ void editRecord(struct record *A, int s){
 	            }
 	        }
 	    }
+	    
 	    // present all topics without duplicates
-	    printf("\nAll Topics\n");
+	    printf("\n\n\t\t\t-----------------All Topics---------------\n");
 	    for(i = 0; i < resSize; i++){
+	    	printf("\n\t\t\t\t\t   ");
 	    	int length=strlen(res[i].topic);
 	        for(j=0;j<length;j++){
 	        	printf("%c",res[i].topic[j]);
 			}
 			printf("\n");
 	    }
+	    printf("\n\n\t\t\t------------------------------------------\n");
+	    
 		// allow user to choose topic
-		printf("\nPlease choose a topic : ");
+		printf("\n\t\t\tPlease choose a topic : ");
 		getString20(choiceTopic);
+		printf("\n\n\t\t\tHere are the questions under your chosen topic...");
 		for(l=0;l<s;l++){
 			cmp=strcmp((A+l)->topic,choiceTopic);
 			if(!cmp){
+				printf("\n");
 				showRecord(A,l);
 			}
 		}
+		
 		// allow user to choose question number 
-		printf("\nPlease enter the question number of your desired question : ");
+		printf("\n\n\t\t\tPlease enter the question number of your desired question : ");
 		scanf("%d", &choiceQuestion);
+		
 		// allow user to edit chosen question
 		for(l=0;l<s;l++){
 			if(choiceQuestion==(A+l)->questionNumber){
-				printf("\nEditing...");
+				printf("\n\t\t\tCurrently Editing...");
 				showRecord(A,l);
-				printf("\n1 | Edit Topic");
-				printf("\n2 | Edit Question");
-				printf("\n3 | Edit Choice 1");
-				printf("\n4 | Edit Choice 2");
-				printf("\n5 | Edit Choice 3");
-				printf("\n6 | Edit Answer\n");
-				printf("\nWhich field do you want to edit? : ");
+				printf("\n\t\t\t1 | Edit Topic");
+				printf("\n\t\t\t2 | Edit Question");
+				printf("\n\t\t\t3 | Edit Choice 1");
+				printf("\n\t\t\t4 | Edit Choice 2");
+				printf("\n\t\t\t5 | Edit Choice 3");
+				printf("\n\t\t\t6 | Edit Answer\n");
+				printf("\n\t\t\tWhich field do you want to edit? : ");
 				scanf("%d", &choiceField);
 				if(choiceField==1){
-					printf("\nEnter topic : ");
+					printf("\n\t\t\tEnter topic : ");
 					getString20(((A+l)->topic));
-					printf("\nHere is your newly edited question!\n");
+					printf("\n\n\t\t\tHere is your newly edited question!\n");
 					showRecord(A,l);
 				}
 				if(choiceField==2){
-					printf("\nEnter question : ");
+					printf("\n\t\t\tEnter question : ");
 					getSentence(((A+l)->question));
-					printf("\nHere is your newly edited question!\n");
+					printf("\n\n\t\t\tHere is your newly edited question!\n");
 					showRecord(A,l);
 				}
 				if(choiceField==3){
-					printf("\nEnter choice 1 : ");
+					printf("\n\t\t\tEnter choice 1 : ");
 					getString30(((A+l)->choice1));
-					printf("\nHere is your newly edited question!\n");
+					printf("\n\n\t\t\tHere is your newly edited question!\n");
 					showRecord(A,l);
 				}
 				if(choiceField==4){
-					printf("\nEnter choice 2 : ");
+					printf("\n\t\t\tEnter choice 2 : ");
 					getString30(((A+l)->choice2));
-					printf("\nHere is your newly edited question!\n");
+					printf("\n\n\t\t\tHere is your newly edited question!\n");
 					showRecord(A,l);
 				}
 				if(choiceField==5){
-					printf("\nEnter choice 3 : ");
+					printf("\n\t\t\tEnter choice 3 : ");
 					getString30(((A+l)->choice3));
-					printf("\nHere is your newly edited question!\n");
+					printf("\n\n\t\t\tHere is your newly edited question!\n");
 					showRecord(A,l);
 				}
 				if(choiceField==6){
-					printf("\nEnter answer : ");
+					printf("\n\t\t\tEnter answer : ");
 					getString30(((A+l)->answer));
-					printf("\nHere is your newly edited question!\n");
+					printf("\n\n\t\t\tHere is your newly edited question!\n");
 					showRecord(A,l);
 				}
 			}
 		}
-		printf("\n\nWould you like to edit another question?");
-		printf("\nEnter 'y' / 'n' (yes/no) : ");
+		printf("\n\n\t\t\tWould you like to edit another question?");
+		printf("\n\n\t\t\tType 'y' or 'Y' to enter another.");
+		printf("\n\n\t\t\tType any other character to go back to MANAGE DATA MENU : ");
 		scanf(" %c", &c);			
 	}while(c=='y'||c=='Y');
 
@@ -458,6 +506,8 @@ int deleteRecord(struct record *A, int s){
 	int ctr=0, resSize=0, i, j, k, l, m, found, cmp, choiceQuestion, choiceField;
 	char c, choiceTopic[20];
 	struct record res[s];
+	
+	system("cls");
 	do{
 		// append all topics to struct record res array
 		for(i = 0; i < s; i++){
@@ -481,17 +531,21 @@ int deleteRecord(struct record *A, int s){
 	            }
 	        }
 	    }
+	    
 	    // present all topics without duplicates
-	    printf("\nAll Topics\n");
+	    printf("\n\n\t\t\t-----------------All Topics---------------\n");
 	    for(i = 0; i < resSize; i++){
+	    	printf("\n\t\t\t\t\t   ");
 	    	int length=strlen(res[i].topic);
 	        for(j=0;j<length;j++){
 	        	printf("%c",res[i].topic[j]);
 			}
 			printf("\n");
 	    }
+	    printf("\n\n\t\t\t------------------------------------------\n");
+		
 		// allow user to choose topic
-		printf("\nPlease choose a topic : ");
+		printf("\n\t\t\tPlease choose a topic : ");
 		getString20(choiceTopic);
 		for(l=0;l<s;l++){
 			cmp=strcmp((A+l)->topic,choiceTopic);
@@ -499,13 +553,15 @@ int deleteRecord(struct record *A, int s){
 				showRecord(A,l);
 			}
 		}
+		
 		// allow user to choose question number 
-		printf("\nPlease enter the question number of the question you want to delete : ");
+		printf("\n\t\t\tPlease enter the question number of the question you want to delete : ");
 		scanf("%d", &choiceQuestion);
+		
 		// allow user to delete chosen question
 		for(l=0;l<s;l++){
 			if(choiceQuestion==(A+l)->questionNumber){
-				printf("\nDeleting...");
+				printf("\n\t\t\tCurrently Editing...");
 				showRecord(A,l);
 				for(m=l;m<s;m++){
 					strcpy(((A+m)->topic), (A+(m+1))->topic);
@@ -519,8 +575,9 @@ int deleteRecord(struct record *A, int s){
 				s--;
 			}
 		}	
-		printf("\n\nWould you like to delete another question?");
-		printf("\nEnter 'y' / 'n' (yes/no) : ");
+		printf("\n\n\t\t\tWould you like to delete another question?");
+		printf("\n\n\t\t\tType 'y' or 'Y' to enter another.");
+		printf("\n\n\t\t\tType any other character to go back to MANAGE DATA MENU : ");
 		scanf(" %c", &c);
 	}while(c=='y'||c=='Y');
 	
@@ -531,28 +588,38 @@ int deleteRecord(struct record *A, int s){
 	@param s - is the size of the array of records passed
 */ 
 void importData(struct record *A, int s){
-	char filename[30];
+	char c, filename[30];
 	int i=0, flag=1;
 	// file pointer declaration
 	FILE *fp;
 	
+	system("cls");
 	while(flag){
-		fprintf(stdout, "Input filename : ");
+		fprintf(stdout, "\n\t\t\tPlease input filename : ");
 		fscanf(stdin, "%s", filename);
 		if((fp=fopen(filename, "r"))==NULL){
-			fprintf(stderr, "ERROR: %s does not exist.\n", filename);
-			fprintf(stdout, "Please try inputting a different filename.\n");
+			fprintf(stdout, "\n\t\t\t---------------------------------------------------\n");
+			fprintf(stderr, "\n\t\t\t----------   ERROR : %s does not exist  -----------\n", filename);
+			fprintf(stdout, "\n\t\t\t---------------------------------------------------\n");
+			fprintf(stdout, "\n\t\t\tPlease try inputting a different filename.\n");
+			flag=1;
 		} else {
 				while((fscanf(fp, "%s\n%d\n %[^\n]\n%s\n%s\n%s\n%s",  ((A+i)->topic), &((A+i)->questionNumber), ((A+i)->question),
 					((A+i)->choice1), ((A+i)->choice2), ((A+i)->choice3), ((A+i)->answer))==7)){ // changed 2nd %s to <SPACE>%[^\n]
-
-					fprintf(stdout,"\nQuestion[%d] = %s\n%s\n%s\n%s\n%s\n%s\n", (A+i)->questionNumber, (A+i)->topic, (A+i)->question,
-					(A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer); 
+					
+					fprintf(stdout, "\n\t\t\t------------Question Number [%d]-----------\n", (A+i)->questionNumber);
+					fprintf(stdout, "\n\t\t\tQuestion Topic : %s", (A+i)->topic);
+					fprintf(stdout, "\n\n\t\t\tQuestion : %s", (A+i)->question);
+					fprintf(stdout, "\n\n\t\t\tA.%s\t\tB.%s\n\n\t\t\tC.%s\t\tAnswer = %s", (A+i)->choice1, (A+i)->choice2, (A+i)->choice3, (A+i)->answer);
+					fprintf(stdout, "\n\n\t\t\t------------------------------------------\n"); 
 					i++;
 				}
 				flag=0;
 			}
 		}
+		printf("\n\n\t\t\tHere are the imported data!");
+		printf("\n\n\t\t\tType any other character to go back to MANAGE DATA MENU : ");
+		scanf(" %c", &c);
 		fclose(fp);
 }
 /* exportData is a void function that allows the user to write a list of entries to a given text file
@@ -582,8 +649,8 @@ void exportData(struct record *A, int s){
 int showManageDataMenu(){
 	int choice;
 	do{
-//		system("cls");
-		printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MANAGE DATA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
+		system("cls");
+		printf("\n\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MANAGE DATA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2 1| Add a Record    	  \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
@@ -600,7 +667,7 @@ int showManageDataMenu(){
 		printf("		\xDB\xDB\xDB\xDB\xB2 7| Go back to MAIN MENU     \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n");
-		printf("\nPlease enter your choice : ");
+		printf("\n\t\tPlease enter your choice : ");
 		scanf("%d", &choice);
 	}while((choice<1)||(choice>7));
 	
@@ -679,13 +746,14 @@ int randomNumber(int minNum, int maxNum){
 	@param <param name-instance> - <description>
 */
 void corePlay(struct record *A, int s, struct score *B, int t){
-	int i, j=0, k, l, cmp, accScore=0;
-	int random=randomNumber(1,s);
+	int i, j=0, k, l, cmp, ctr, found, random, resSize=0, accScore=0;
 	char c, dump, playerName[20], choiceTopic[20], choiceAnswer[30];
+	struct record res[s];
 	
+	random=randomNumber(1,s);
 	// check random number
-	printf("\nrandom = %d", random);
-	scanf(" %c",&c);
+	// printf("\nRandom = %d\n", random);
+	// scanf(" %c",&c);
 	
 	do{
 		// ask for player name
@@ -695,12 +763,12 @@ void corePlay(struct record *A, int s, struct score *B, int t){
 		for(i=0;i<s;i++){
 			cmp=strcmp((B+i)->player,playerName);
 			if(!cmp){
-				printf("Welcome back %s!\n", playerName);
+				printf("\nWelcome back %s!\n", playerName);
 			} 
 		}
 		// if playerName does not exist
 		if(cmp!=0){
-			printf("New User Alert! Welcome!");
+			printf("\nNew User Alert! Welcome %s!", playerName);
 			strcpy((B+j)->player,playerName);
 		}
 		// append all topics to struct record res array
@@ -726,7 +794,9 @@ void corePlay(struct record *A, int s, struct score *B, int t){
 	        }
 	    }
 	    // present all topics without duplicates
-	    printf("\nAll Topics\n");
+	    printf("\n\t\t\t------------\n");
+	    printf("\n\t\t\t All Topics \n");
+	    printf("\n\t\t\t------------\n");
 	    for(i = 0; i < resSize; i++){
 	    	int length=strlen(res[i].topic);
 	        for(j=0;j<length;j++){
@@ -771,16 +841,18 @@ void corePlay(struct record *A, int s, struct score *B, int t){
 			}
 		}
 		// keep displaying current score of player
-		printf("\nCurrent Score is %d", accScore);
+		printf("\nCurrent Score is %d\n", accScore);
 		// display end game option
 		printf("\nWould you like to try again? : ");
 		scanf(" %c", &c);
-		j++;
+		j++; // increment j
 	}while(c=='y'||c=='Y');
-	// if end game option is chosen, display message and acc score 
-	// save score to current player 
+	// if end game option is chosen, display message and acc score  
 	printf("\n\n");
+	printf("\n\t\t\t---------------------------------------------------\n");
+	printf("\n\t\t\t-------------- Current Score Record ---------------\n");
 	showScore(B,t);
+	// save score of current player to "score.txt"
 	// Go back to Main Menu	
 }
 /* showScores is a void function that allows the user to view all scores of the General Knowledge Quiz Game
@@ -802,8 +874,8 @@ void showScore(struct score *B, int t){
 int showPlayMenu(){
 	int choice;
 	do{
-//		system("cls");
-		printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MANAGE DATA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
+		system("cls");
+		printf("\n\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MANAGE DATA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2 1| Play            	  \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
@@ -812,7 +884,7 @@ int showPlayMenu(){
 		printf("		\xDB\xDB\xDB\xDB\xB2 3| Exit                     \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 		printf("		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n");
-		printf("\nPlease enter your choice : ");
+		printf("\n\t\tPlease enter your choice : ");
 		scanf("%d", &choice);
 	}while((choice<1)||(choice>3));
 	
@@ -874,7 +946,7 @@ int main(){
 	while(flag){
 		choice=showMainMenu(password);
 		switch(choice){
-			case 1: // "Manage Data"
+			case 1: // "Manage Data" core feature
 				{
 					// get password
 					isVerified=0;
@@ -885,7 +957,7 @@ int main(){
 					}
 					break;
 				}
-			case 2: // "Play"
+			case 2: // "Play" core feature
 				{
 					play(quizRecord,s,quizScores,s);
 					break;	
@@ -893,7 +965,7 @@ int main(){
 			case 3: // "Exit"
 				{
 					system("cls");
-					printf("\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2    EXIT    \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
+					printf("\n\n		\xB3\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2    EXIT    \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB3\n\n");
 					printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
 					printf("		\xDB\xDB\xDB\xDB\xB2     Thanks for playing!     \xB2\xDB\xDB\xDB\xDB\n\n");
 					printf("		\xDB\xDB\xDB\xDB\xB2                             \xB2\xDB\xDB\xDB\xDB\n\n");
@@ -905,8 +977,8 @@ int main(){
 			default: // default
 				{
 					system("cls");
-					printf("Invalid Input\n");
-					printf("Please enter any letter to proceed with another choice : ");
+					printf("\n\t\t\tInvalid Input");
+					printf("\n\n\t\t\tPlease enter any letter to proceed with another choice : ");
 					scanf(" %c", &c);
 					break;
 				}
