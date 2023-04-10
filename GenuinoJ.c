@@ -3,6 +3,7 @@
 #include <string.h>
 #include <conio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /***************************General Knowledge Quiz Game*****************************
 
@@ -80,7 +81,7 @@ int showMainMenu(char password[]){
 /* getPassword allows the user to input a password in order to access the Records and returns an integer
 	@param *password[] - points to the address of char array password
 */ 
-int getPassword(char *password[]){
+int getPassword(char *password){
 	char c, d, userEntry[20];
 	int i=0;
 	
@@ -249,6 +250,7 @@ int linearSearch(char *param1, char *param2, struct record A[], int s){
 			return -1;
 		}
 	}
+	return 0;
 }
 /* showRecord is a void function that allows the user to view a record given the index of it
 	@param struct record A[] - points to the first index address of the array of records passed to the function
@@ -283,14 +285,14 @@ void showAll(struct record A[], int s){
 	@param s - is the size of the array of records passed
 */
 void getInput(struct record *A, int s){
-	int i=0, current=s-1, found=0;
+	int i=0, found=0;
 	char c;
 	// start from index of last element
 	char userEntryQuestion[150];
 	char userEntryAnswer[30];
 	 
 	do{
-		printf("\n\t\t\t------------- Preliminary Check ------------\n", (A+i)->questionNumber);
+		printf("\n\t\t\t------------- Preliminary Check ------------\n");
 		printf("\n\t\t\tEnter a question : ");
 		getSentence(userEntryQuestion);
 		printf("\n\n\t\t\t------------------------------------------\n");
@@ -503,7 +505,7 @@ void editRecord(struct record *A, int s){
 	@param s - is the size of the array of records passed
 */ 
 int deleteRecord(struct record *A, int s){
-	int ctr=0, resSize=0, i, j, k, l, m, found, cmp, choiceQuestion, choiceField;
+	int ctr=0, resSize=0, i, j, k, l, m, found, cmp, choiceQuestion;
 	char c, choiceTopic[20];
 	struct record res[s];
 	
@@ -638,7 +640,7 @@ void exportData(struct record *A, int s){
 	fp=fopen(filename, "w"); // open in write mode
 	
 	for(i=0;i<s;i++){
-		fprintf(stdout,"\nQuestion[%d] = %s\n%s\n%s\n%s\n%s\n%s\n\n", ((A+i)->topic), &((A+i)->questionNumber), ((A+i)->question),
+		fprintf(fp,"%s\n%d\n%s\n%s\n%s\n%s\n%s\n\n", ((A+i)->topic), ((A+i)->questionNumber), ((A+i)->question),
 					((A+i)->choice1), ((A+i)->choice2), ((A+i)->choice3), ((A+i)->answer));
 	}
 	
@@ -711,7 +713,7 @@ void manageData(struct record *A, int s){
 				}
 			case 6: // Export data
 				{
-//					exportData(A,s);
+					exportData(A,s);
 					break;
 				}
 			case 7: // Go back to MAIN MENU
@@ -740,6 +742,18 @@ int randomNumber(int minNum, int maxNum){
 	result=(rand()%(highNum-lowNum))+lowNum;
 	
 	return result;
+}
+/* showScores is a void function that allows the user to view all scores of the General Knowledge Quiz Game
+	@param <param name-instance> - <description>
+	@param <param name-instance> - <description>
+*/
+void showScore(struct score *B, int t){
+	int i;
+	printf("\n\t\t\t---------------------------------------------------\n");
+	for(i=0;i<t;i++){
+		printf("\n\t\t\t  Row # %d\tPlayer : %s\t\tScore | %d\n", (B+i)->rowNum,(B+i)->player,(B+i)->score);
+	}
+	printf("\n\t\t\t---------------------------------------------------\n");
 }
 /* corePlay is the core function of the play feature of this General Knowledge Quiz Game
 	@param <param name-instance> - <description>
@@ -855,18 +869,6 @@ void corePlay(struct record *A, int s, struct score *B, int t){
 	// save score of current player to "score.txt"
 	// Go back to Main Menu	
 }
-/* showScores is a void function that allows the user to view all scores of the General Knowledge Quiz Game
-	@param <param name-instance> - <description>
-	@param <param name-instance> - <description>
-*/
-void showScore(struct score *B, int t){
-	int i;
-	printf("\n\t\t\t---------------------------------------------------\n");
-	for(i=0;i<t;i++){
-		printf("\n\t\t\t  Row # %d\tPlayer : %s\t\tScore | %d\n", (B+i)->rowNum,(B+i)->player,(B+i)->score);
-	}
-	printf("\n\t\t\t---------------------------------------------------\n");
-}
 /* showPlayMenu provides the interface for the user to either play, view scores, or go back to main menu and returns an integer
 	@param <param name-instance> - <description>
 	@param <param name-instance> - <description>
@@ -941,7 +943,7 @@ void play(struct record *A, int s, struct score *B, int t){
 int main(){
 	struct record quizRecord[50];
 	struct score quizScores[50];
-	int s=2, choice, flag=1, isVerified=0; // verified for password
+	int s=20, choice, flag=1, isVerified=0; // verified for password
 	char c, password[20]={'\0'};
 	while(flag){
 		choice=showMainMenu(password);
