@@ -30,8 +30,7 @@ Purpose: CCPROG2 [Machine Project]
 ***********************************************************************************
 **********************************************************************************/
 
-/* The following are the structures defined using method 2 */
-	
+/* The following are the structures defined using method 2 */	
 // struct that will store data about a quiz question
 struct record {
 	char topic[20];
@@ -48,9 +47,34 @@ struct scoreRecord {
 	char player[20];
 	int score;
 };
+
 /* The following are the function prototypes for the functions used in this project 
 	disclaimer: all function prototypes are arranged in alphabetical order 
 */
+int addRecord(struct record *A, int s);
+int compareTwoString(char a[], char b[]);
+void corePlay(FILE *fp, struct record *A, int s, struct scoreRecord *B, int t);
+int deleteRecord(struct record *A, int s);
+void editRecord(struct record *A, int s);
+void exportData(struct record *A, int s);
+void getInput(struct record *A, int s);
+int getPassword(char *password);
+void getSentence(char *ptr);
+void getString20(char *ptr);
+void getString30(char *ptr);
+void importData(struct record *A, int s);
+int linearSearch(char *param1, char *param2, struct record A[], int s);
+int linearSearchScore(char *param, struct scoreRecord B[], int s);
+void manageData(struct record *A, int s);
+void play(struct record *A, int s, struct scoreRecord *B, int t);
+int randomNumber(int minNum, int maxNum);
+void showAll(struct record A[], int s);
+int showMainMenu(char password[]);
+int showManageDataMenu();
+int showPlayMenu();
+void showRecord(struct record A[], int index);
+void showRecord(struct record A[], int index);
+void showScore(struct scoreRecord *B, int t);
 
 /* showMainMenu allows the program to display the three foundational features of the Quiz Game
 	@feature - "Manage Data"
@@ -257,13 +281,13 @@ int linearSearch(char *param1, char *param2, struct record A[], int s){
 	@param struct record A[] - points to the first index address of the array of records passed to the function
 	@param s - is the size of the array of records passed 
 */
-int linearSearchScore(char *param, struct scoreRecord A[], int s){
+int linearSearchScore(char *param, struct scoreRecord B[], int s){
 	int i, cmp;
 	for(i=0;i<s;i++){
 		/* for checking the strings being compared
 			printf("\n\n\ncompare : %s with : %s \n%s \n%s\n",A[0].question,param1, A[0].question, param1);
 		*/
-		cmp=strcmp(A[i].player, param);
+		cmp=strcmp(B[i].player, param);
 		if(cmp==0){
 			return i; // return index if found
 		} else {
