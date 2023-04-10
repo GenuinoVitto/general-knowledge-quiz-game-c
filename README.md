@@ -5,5 +5,6 @@ This repository contains the [CCPROG2] Machine Project Submission of Jose Mari V
 Files Include: 
  - Main Machine Project Source Code ["GenuinoJ.c"]
  - Sample Record Data ["sample-records-updated.txt"]
+ - Sample Output txt files ["output.txt"] & ["score.txt"]
 
  Generated Access Token : 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
